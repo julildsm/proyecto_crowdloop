@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Técnicas de aseguramiento de calidad | SGCS · Crowd Loop</title>
+  <meta name="description" content="Verificación y validación, revisiones, inspecciones, pruebas de caja blanca y negra y auditorías de calidad.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN (US-01) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link is-active" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html" aria-current="page">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          <!-- Página prevista para un próximo sprint: data-coming-soon muestra un aviso -->
+          <li><a class="nav-link" href="metodologias.html" data-coming-soon>Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li>Calidad</li><li aria-current="page">Técnicas de aseguramiento</li></ol></nav>
+        <h1>Técnicas de aseguramiento de calidad</h1>
+        <p class="lead">Asegurar la calidad es prevenir y detectar defectos durante todo el desarrollo, no solo al final. Compara los enfoques y explora cada técnica.</p>
+      </div>
+    </section>
+
+    <!-- ESQUEMAS COMPARATIVOS (US-03) -->
+    <section class="section" aria-labelledby="comparativas-title">
+      <div class="container">
+        <h2 id="comparativas-title" class="section-title">Esquemas comparativos</h2>
+
+        <div class="table-wrap">
+          <table class="compare-table">
+            <caption>Verificación vs. Validación</caption>
+            <thead><tr><th scope="col">Criterio</th><th scope="col" class="col-a">Verificación</th><th scope="col" class="col-b">Validación</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Pregunta clave</th><td>¿Estamos construyendo el producto correctamente?</td><td>¿Estamos construyendo el producto correcto?</td></tr>
+              <tr><th scope="row">Se aplica sobre</th><td>Requisitos, diseño y código</td><td>El producto terminado o un prototipo en uso</td></tr>
+              <tr><th scope="row">Cuándo</th><td>Durante todo el desarrollo</td><td>Al cierre de cada iteración o versión</td></tr>
+              <tr><th scope="row">Técnicas típicas</th><td>Revisiones, inspecciones, análisis estático</td><td>Pruebas de aceptación, demos, pruebas con usuarios</td></tr>
+              <tr><th scope="row">Participan</th><td>Equipo de desarrollo y QA</td><td>Cliente, usuarios y QA</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap table-gap">
+          <table class="compare-table">
+            <caption>Pruebas de caja blanca vs. caja negra</caption>
+            <thead><tr><th scope="col">Criterio</th><th scope="col" class="col-a">Caja blanca</th><th scope="col" class="col-b">Caja negra</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Conocimiento del código</th><td>Necesario</td><td>No necesario</td></tr>
+              <tr><th scope="row">Se basa en</th><td>Estructura interna: caminos, condiciones, bucles</td><td>Requisitos y especificaciones</td></tr>
+              <tr><th scope="row">Técnicas</th><td>Cobertura de sentencias y de decisiones</td><td>Partición de equivalencia y valores límite</td></tr>
+              <tr><th scope="row">Nivel habitual</th><td>Unitarias e integración</td><td>Sistema y aceptación</td></tr>
+              <tr><th scope="row">La ejecutan</th><td>Programadores</td><td>Testers</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TARJETAS INTERACTIVAS (US-03): las controla initFlipCards() en java.js -->
+    <section class="section" aria-labelledby="tecnicas-title">
+      <div class="container">
+        <h2 id="tecnicas-title" class="section-title">Las técnicas en detalle</h2>
+        <p>Toca una tarjeta para ver cómo se aplica la técnica.</p>
+        <div class="flip-toolbar">
+          <button class="btn-outline" id="flip-all" type="button">Voltear todas</button>
+        </div>
+        <div class="flip-grid">
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Técnica estática</span>
+                <h3>Revisión por pares</h3>
+                <p>Un compañero revisa tu trabajo antes de integrarlo.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Revisión por pares">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Revisión por pares</h3>
+                <ul><li>Se aplica a código, requisitos y diseño.</li><li>Usa listas de chequeo para no olvidar puntos.</li><li>En Scrum equivale a revisar los Pull Requests.</li></ul>
+                <p class="flip-note">Detecta defectos temprano y comparte conocimiento en el equipo.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Revisión por pares">Volver</button>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Técnica estática</span>
+                <h3>Inspección formal</h3>
+                <p>Un proceso con roles y pasos definidos para encontrar defectos.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Inspección formal">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Inspección formal</h3>
+                <ul><li>Roles: moderador, autor, lector e inspectores.</li><li>Cada inspector se prepara de forma individual.</li><li>Los defectos se registran y se les hace seguimiento.</li></ul>
+                <p class="flip-note">Es la más eficaz de las revisiones, pero también la más costosa.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Inspección formal">Volver</button>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Técnica estática</span>
+                <h3>Walkthrough</h3>
+                <p>El autor recorre su trabajo y el equipo pregunta y comenta.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Walkthrough">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Walkthrough</h3>
+                <ul><li>Es informal y lo conduce el autor.</li><li>Sirve para aprender y aclarar ambigüedades.</li><li>No exige preparación ni informes formales.</li></ul>
+                <p class="flip-note">Ideal para presentar diseños o requisitos nuevos.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Walkthrough">Volver</button>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Técnica dinámica</span>
+                <h3>Pruebas de caja blanca</h3>
+                <p>Se prueba la estructura interna: caminos, condiciones y bucles.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Pruebas de caja blanca">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Pruebas de caja blanca</h3>
+                <ul><li>Requiere conocer el código fuente.</li><li>Se mide con cobertura de sentencias y de decisiones.</li><li>Las suelen escribir los propios programadores.</li></ul>
+                <p class="flip-note">Es la base de las pruebas unitarias.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Pruebas de caja blanca">Volver</button>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Técnica dinámica</span>
+                <h3>Pruebas de caja negra</h3>
+                <p>Se comprueban entradas y salidas sin mirar el código.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Pruebas de caja negra">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Pruebas de caja negra</h3>
+                <ul><li>Parten de los requisitos y las especificaciones.</li><li>Usan partición de equivalencia y valores límite.</li><li>Las ejecutan testers o usuarios.</li></ul>
+                <p class="flip-note">Predominan en pruebas de sistema y de aceptación.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Pruebas de caja negra">Volver</button>
+              </div>
+            </div>
+          </article>
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <span class="tag">Proceso</span>
+                <h3>Auditoría de calidad</h3>
+                <p>Revisión independiente de que se cumple el plan y las normas.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Ver detalle de Auditoría de calidad">Ver detalle</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Auditoría de calidad</h3>
+                <ul><li>La realiza alguien ajeno al equipo del proyecto.</li><li>Compara lo hecho con procedimientos y estándares.</li><li>Termina en hallazgos y acciones correctivas.</li></ul>
+                <p class="flip-note">Verifica el proceso, no solo el producto.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen de Auditoría de calidad">Volver</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

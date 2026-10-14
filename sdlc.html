@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ciclo de vida del software (SDLC) | SGCS · Crowd Loop</title>
+  <meta name="description" content="Las siete fases del ciclo de vida del software y los controles de calidad de cada una, en una línea de tiempo interactiva.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN (US-01) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link is-active" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html" aria-current="page">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          <!-- Página prevista para un próximo sprint: data-coming-soon muestra un aviso -->
+          <li><a class="nav-link" href="metodologias.html" data-coming-soon>Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li>Procesos</li><li aria-current="page">Ciclo de vida (SDLC)</li></ol></nav>
+        <h1>Ciclo de vida del software (SDLC)</h1>
+        <p class="lead">El SDLC ordena el trabajo desde la idea hasta que el software deja de usarse. Recorre las siete fases y mira qué controles de calidad tiene cada una.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="timeline-title">
+      <div class="container">
+        <h2 id="timeline-title" class="section-title">Las 7 fases</h2>
+        <div class="timeline-toolbar">
+          <button class="btn-outline" id="tl-toggle-all" type="button">Expandir todas</button>
+        </div>
+
+        <!-- LÍNEA DE TIEMPO (US-05): la anima initTimeline() en java.js -->
+        <ol class="timeline" data-timeline>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-1" aria-expanded="false" aria-controls="tl-p-1">
+                <span class="tl-phase">Fase 1</span>
+                <span class="tl-title">Planificación</span>
+                <span class="tl-summary">Definir el alcance, los plazos, los costos y los riesgos.</span>
+              </button>
+              <div class="tl-body" id="tl-p-1" role="region" aria-labelledby="tl-t-1" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Estudio de viabilidad, plan del proyecto y asignación de recursos.</dd>
+                  <dt>Entregable</dt><dd>Plan del proyecto.</dd>
+                  <dt>Control de calidad</dt><dd>Plan de calidad y criterios de aceptación iniciales.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-2" aria-expanded="false" aria-controls="tl-p-2">
+                <span class="tl-phase">Fase 2</span>
+                <span class="tl-title">Análisis de requisitos</span>
+                <span class="tl-summary">Entender con precisión qué necesita el usuario.</span>
+              </button>
+              <div class="tl-body" id="tl-p-2" role="region" aria-labelledby="tl-t-2" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Entrevistas, historias de usuario y priorización del backlog.</dd>
+                  <dt>Entregable</dt><dd>Especificación de requisitos.</dd>
+                  <dt>Control de calidad</dt><dd>Revisión de requisitos: que sean claros, completos y verificables.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-3" aria-expanded="false" aria-controls="tl-p-3">
+                <span class="tl-phase">Fase 3</span>
+                <span class="tl-title">Diseño</span>
+                <span class="tl-summary">Decidir cómo se construirá la solución.</span>
+              </button>
+              <div class="tl-body" id="tl-p-3" role="region" aria-labelledby="tl-t-3" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Arquitectura, modelo de datos y prototipos de interfaz.</dd>
+                  <dt>Entregable</dt><dd>Documento de diseño y maquetas.</dd>
+                  <dt>Control de calidad</dt><dd>Revisión del diseño y análisis de atributos como rendimiento y seguridad.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-4" aria-expanded="false" aria-controls="tl-p-4">
+                <span class="tl-phase">Fase 4</span>
+                <span class="tl-title">Implementación</span>
+                <span class="tl-summary">Programar el sistema según el diseño.</span>
+              </button>
+              <div class="tl-body" id="tl-p-4" role="region" aria-labelledby="tl-t-4" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Codificación, integración y aplicación de estándares.</dd>
+                  <dt>Entregable</dt><dd>Código fuente versionado.</dd>
+                  <dt>Control de calidad</dt><dd>Revisión de código, análisis estático y pruebas unitarias.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-5" aria-expanded="false" aria-controls="tl-p-5">
+                <span class="tl-phase">Fase 5</span>
+                <span class="tl-title">Pruebas</span>
+                <span class="tl-summary">Verificar y validar que el software cumple lo pedido.</span>
+              </button>
+              <div class="tl-body" id="tl-p-5" role="region" aria-labelledby="tl-t-5" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Pruebas de integración, de sistema y de aceptación; gestión de defectos.</dd>
+                  <dt>Entregable</dt><dd>Informe de pruebas.</dd>
+                  <dt>Control de calidad</dt><dd>Criterios de salida, cobertura y métricas de defectos.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-6" aria-expanded="false" aria-controls="tl-p-6">
+                <span class="tl-phase">Fase 6</span>
+                <span class="tl-title">Despliegue</span>
+                <span class="tl-summary">Poner el software en manos de los usuarios.</span>
+              </button>
+              <div class="tl-body" id="tl-p-6" role="region" aria-labelledby="tl-t-6" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Empaquetado, configuración, migración de datos y capacitación.</dd>
+                  <dt>Entregable</dt><dd>Versión liberada y manual de uso.</dd>
+                  <dt>Control de calidad</dt><dd>Pruebas de humo en producción y plan de reversión.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <span class="tl-marker" aria-hidden="true"></span>
+            <div class="tl-card">
+              <button class="tl-toggle" type="button" id="tl-t-7" aria-expanded="false" aria-controls="tl-p-7">
+                <span class="tl-phase">Fase 7</span>
+                <span class="tl-title">Mantenimiento</span>
+                <span class="tl-summary">Mantener el software útil después de la entrega.</span>
+              </button>
+              <div class="tl-body" id="tl-p-7" role="region" aria-labelledby="tl-t-7" hidden>
+                <dl class="def-list">
+                  <dt>Actividades</dt><dd>Correcciones, adaptaciones a nuevos entornos, mejoras y prevención.</dd>
+                  <dt>Entregable</dt><dd>Parches y nuevas versiones.</dd>
+                  <dt>Control de calidad</dt><dd>Pruebas de regresión y seguimiento de incidencias.</dd>
+                </dl>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- US-06: MODELOS TRADICIONALES -->
+    <!-- Reutiliza el patrón de tarjetas que voltean (.flip-card) de la US-03: -->
+    <!-- lo controla initFlipCards() en java.js, ya compartido entre páginas. -->
+    <section class="section" aria-labelledby="models-title">
+      <div class="container">
+        <h2 id="models-title" class="section-title">US-06: Modelos tradicionales</h2>
+        <p>Así se aplican las fases del SDLC en tres modelos clásicos. Tocá una tarjeta para ver su esquema.</p>
+        <div class="flip-toolbar">
+          <button class="btn-outline" id="flip-all" type="button">Voltear todas</button>
+        </div>
+
+        <div class="flip-grid">
+
+          <!-- Modelo en Cascada -->
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h10v10h10v10h10v10"/></svg>
+                <h3>Modelo en Cascada</h3>
+                <div>
+                  <h4 class="flip-subhead pc-pros-text">Ventajas</h4>
+                  <ul class="flip-points">
+                    <li>Estructura simple y fácil de gestionar</li>
+                    <li>Hitos claros en cada fase</li>
+                  </ul>
+                  <h4 class="flip-subhead pc-cons-text">Desventajas</h4>
+                  <ul class="flip-points">
+                    <li>Poca flexibilidad ante cambios</li>
+                    <li>El cliente ve el resultado recién al final</li>
+                  </ul>
+                </div>
+                <button class="btn btn-secondary" type="button" aria-label="Ver esquema del modelo en Cascada">Ver esquema</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Esquema: Cascada</h3>
+                <svg class="model-diagram" viewBox="0 0 260 180" role="img" aria-label="Cinco fases en escalera descendente: Requisitos, Diseño, Implementación, Pruebas y Mantenimiento, cada una debajo y a la derecha de la anterior">
+                  <defs>
+                    <marker id="arr-casc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M0 0 10 5 0 10z" fill="var(--dark-cyan)"/>
+                    </marker>
+                  </defs>
+                  <g fill="none" stroke="var(--rosy-taupe)" stroke-width="1.5">
+                    <rect x="4" y="6" width="104" height="24" rx="4"/>
+                    <rect x="38" y="40" width="104" height="24" rx="4"/>
+                    <rect x="72" y="74" width="104" height="24" rx="4"/>
+                    <rect x="106" y="108" width="104" height="24" rx="4"/>
+                    <rect x="140" y="142" width="104" height="24" rx="4"/>
+                  </g>
+                  <g stroke="var(--dark-cyan)" stroke-width="1.5" marker-end="url(#arr-casc)">
+                    <line x1="18" y1="30" x2="46" y2="40"/>
+                    <line x1="52" y1="64" x2="80" y2="74"/>
+                    <line x1="86" y1="98" x2="114" y2="108"/>
+                    <line x1="120" y1="132" x2="148" y2="142"/>
+                  </g>
+                  <g fill="var(--text)" font-size="9" font-family="var(--font-body)">
+                    <text x="56" y="21" text-anchor="middle">Requisitos</text>
+                    <text x="90" y="55" text-anchor="middle">Diseño</text>
+                    <text x="124" y="89" text-anchor="middle">Implementación</text>
+                    <text x="158" y="123" text-anchor="middle">Pruebas</text>
+                    <text x="192" y="157" text-anchor="middle">Mantenimiento</text>
+                  </g>
+                </svg>
+                <p class="flip-note">Cada fase empieza cuando termina la anterior; no hay vuelta atrás.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen del modelo en Cascada">Volver</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Modelo en V -->
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 8l16 32L40 8"/></svg>
+                <h3>Modelo en V</h3>
+                <div>
+                  <h4 class="flip-subhead pc-pros-text">Ventajas</h4>
+                  <ul class="flip-points">
+                    <li>Las pruebas se planifican desde el inicio</li>
+                    <li>Alta trazabilidad requisitos-pruebas</li>
+                  </ul>
+                  <h4 class="flip-subhead pc-cons-text">Desventajas</h4>
+                  <ul class="flip-points">
+                    <li>Tan rígido como la cascada</li>
+                    <li>Costoso de modificar</li>
+                  </ul>
+                </div>
+                <button class="btn btn-secondary" type="button" aria-label="Ver esquema del modelo en V">Ver esquema</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Esquema: Modelo en V</h3>
+                <svg class="model-diagram" viewBox="0 0 260 180" role="img" aria-label="Forma de V: a la izquierda bajan Requisitos, Diseño y Codificación; en la base se programa; a la derecha suben Pruebas unitarias, de integración y de aceptación, conectadas por líneas punteadas con su etapa equivalente">
+                  <g fill="none" stroke="var(--rosy-taupe)" stroke-width="2.5" stroke-linejoin="round">
+                    <polyline points="20,20 65,85 130,155 195,85 240,20"/>
+                  </g>
+                  <g stroke="var(--dark-cyan)" stroke-width="1" stroke-dasharray="3 3">
+                    <line x1="20" y1="20" x2="240" y2="20"/>
+                    <line x1="65" y1="85" x2="195" y2="85"/>
+                  </g>
+                  <g fill="var(--twilight-indigo)" stroke="var(--dark-cyan)" stroke-width="1.5">
+                    <circle cx="20" cy="20" r="5"/><circle cx="65" cy="85" r="5"/><circle cx="130" cy="155" r="5"/>
+                    <circle cx="195" cy="85" r="5"/><circle cx="240" cy="20" r="5"/>
+                  </g>
+                  <g fill="var(--text)" font-size="9" font-family="var(--font-body)">
+                    <text x="20" y="12" text-anchor="middle">Requisitos</text>
+                    <text x="48" y="78" text-anchor="middle">Diseño</text>
+                    <text x="130" y="172" text-anchor="middle">Codificación</text>
+                    <text x="212" y="78" text-anchor="middle">Pr. integración</text>
+                    <text x="240" y="12" text-anchor="middle">Pr. aceptación</text>
+                  </g>
+                </svg>
+                <p class="flip-note">Cada etapa de desarrollo (izquierda) tiene su prueba equivalente (derecha).</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen del modelo en V">Volver</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Modelo Iterativo -->
+          <article class="flip-card">
+            <div class="flip-inner">
+              <div class="flip-face flip-front">
+                <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M39 12a18 18 0 1 0 5 15"/><path d="M44 6v10h-10"/></svg>
+                <h3>Modelo Iterativo</h3>
+                <div>
+                  <h4 class="flip-subhead pc-pros-text">Ventajas</h4>
+                  <ul class="flip-points">
+                    <li>Entrega valor desde los primeros ciclos</li>
+                    <li>Incorpora feedback en cada iteración</li>
+                  </ul>
+                  <h4 class="flip-subhead pc-cons-text">Desventajas</h4>
+                  <ul class="flip-points">
+                    <li>Exige una buena arquitectura inicial</li>
+                    <li>Difícil estimar el costo total</li>
+                  </ul>
+                </div>
+                <button class="btn btn-secondary" type="button" aria-label="Ver esquema del modelo Iterativo">Ver esquema</button>
+              </div>
+              <div class="flip-face flip-back">
+                <h3>Esquema: Iterativo</h3>
+                <svg class="model-diagram" viewBox="0 0 260 180" role="img" aria-label="Cuatro etapas en círculo: Planificar, Diseñar, Construir y Evaluar, unidas por flechas que repiten el ciclo">
+                  <defs>
+                    <marker id="arr-iter" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M0 0 10 5 0 10z" fill="var(--dark-cyan)"/>
+                    </marker>
+                  </defs>
+                  <g fill="none" stroke="var(--dark-cyan)" stroke-width="1.5" marker-end="url(#arr-iter)">
+                    <path d="M130 46a56 56 0 0 1 48 54"/>
+                    <path d="M186 118a56 56 0 0 1 -56 42"/>
+                    <path d="M118 158a56 56 0 0 1 -52 -58"/>
+                    <path d="M66 96a56 56 0 0 1 54 -50"/>
+                  </g>
+                  <g fill="var(--twilight-indigo)" stroke="var(--rosy-taupe)" stroke-width="1.5">
+                    <circle cx="130" cy="34" r="22"/>
+                    <circle cx="208" cy="100" r="22"/>
+                    <circle cx="130" cy="166" r="22"/>
+                    <circle cx="52" cy="100" r="22"/>
+                  </g>
+                  <g fill="var(--text)" font-size="9" font-family="var(--font-body)" text-anchor="middle">
+                    <text x="130" y="37">Planificar</text>
+                    <text x="208" y="103">Diseñar</text>
+                    <text x="130" y="169">Construir</text>
+                    <text x="52" y="103">Evaluar</text>
+                  </g>
+                </svg>
+                <p class="flip-note">El ciclo se repite varias veces; cada vuelta entrega una versión más completa.</p>
+                <button class="btn btn-secondary" type="button" aria-label="Volver al resumen del modelo Iterativo">Volver</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

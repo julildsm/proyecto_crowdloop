@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio | SGCS · Crowd Loop</title>
+  <meta name="description" content="Portal de Sistemas de Gestión de Calidad del Software: fundamentos, procesos y metodologías para construir software de calidad.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html" aria-current="page">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          
+          <li><a class="nav-link" href="metodologias.html" data-coming-soon>Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <!-- HERO SECTION (US-01): 2 columnas en escritorio, 1 en móvil -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title">Construye software de calidad con nosotros</h1>
+          <p class="lead">Descubre fundamentos, procesos de desarrollo (tradicionales y ágiles) y las mejores metodologías para garantizar la excelencia.</p>
+        </div>
+        <div class="hero-visual">
+          <!-- Logo con animación CSS flotante e infinita (.float-logo) -->
+          <img class="float-logo" src="imagenes/logo.png" alt="Logo de Crowd Loop: un aro del que se desprenden triángulos" width="320" height="320">
+        </div> 
+      </div>
+    </section>
+
+    
+    <section class="section" aria-labelledby="cards-title">
+      <div class="container">
+        <h2 id="cards-title" class="visually-hidden">Secciones del portal</h2>
+        <div class="cards-grid">
+          <article class="nav-card">
+            <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="m16 24 6 6 11-12"/></svg>
+            <h3>Gestión de la Calidad</h3>
+            <a class="btn btn-secondary" href="fundamentos.html">Ver Fundamentos</a>
+          </article>
+          <article class="nav-card">
+            <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="10" cy="24" r="5"/><circle cx="38" cy="12" r="5"/><circle cx="38" cy="36" r="5"/><path d="M15 24h8l10-10M23 24l10 10"/></svg>
+            <h3>Procesos de Desarrollo</h3>
+            <a class="btn btn-secondary" href="sdlc.html">Explorar SDLC</a>
+          </article>
+          <article class="nav-card">
+            <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="3"/><path d="M18 8v32M30 8v32M10 16h4M22 16h4M22 24h4M34 16h4"/></svg>
+            <h3>Metodologías Ágiles</h3>
+            <a class="btn btn-secondary" href="metodologias.html" data-coming-soon>Scrum/Kanban</a>
+          </article>
+          <article class="nav-card">
+            <svg class="card-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h13a5 5 0 0 1 5 5v23a4 4 0 0 0-4-4H6z"/><path d="M42 10H29a5 5 0 0 0-5 5v23a4 4 0 0 1 4-4h14z"/></svg>
+            <h3>Recursos y Aprendizaje</h3>
+            <a class="btn btn-secondary" href="glosario.html" data-coming-soon>Ver Glosario</a>
+          </article>
+        </div>
+
+        <div class="about-cta">
+          <a class="btn btn-primary btn-large" href="#sobre-nosotros">Sobre Nosotros</a>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="section" id="sobre-nosotros" aria-labelledby="about-title">
+      <!-- <div class="container">
+        <h2 id="about-title">Sobre nosotros</h2>
+        <p>Somos Crowd Loop, el equipo que desarrolla este portal para la materia Sistemas de Gestión de Calidad. Trabajamos con Scrum y aplicamos en el propio proyecto lo que explicamos en el sitio.</p>
+        <ul class="team-list">
+          <li><strong>Jazmin Almaza</strong><span>Scrum Master</span></li>
+          <li><strong>Luisana Parra</strong><span>Diseñadora</span></li>
+          <li><strong>Juliana Ledesma</strong><span>Programadora</span></li>
+          <li><strong>Romina Salvay</strong><span>Tester</span></li>
+        </ul>
+      </div> -->
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

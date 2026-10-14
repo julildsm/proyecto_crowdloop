@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herramientas de calidad | SGCS · Crowd Loop</title>
+  <meta name="description" content="Catálogo filtrable de herramientas de pruebas, análisis estático, control de versiones, integración continua y rendimiento.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN (US-01) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          <!-- Página prevista para un próximo sprint: data-coming-soon muestra un aviso -->
+          <li><a class="nav-link" href="metodologias.html" data-coming-soon>Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link is-active" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html" aria-current="page">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li>Recursos</li><li aria-current="page">Herramientas de calidad</li></ol></nav>
+        <h1>Herramientas de calidad</h1>
+        <p class="lead">Las herramientas ayudan a probar, revisar y automatizar. Filtra por categoría o busca por nombre para encontrar la que necesitas.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Catálogo de herramientas">
+      <div class="container">
+
+        <!-- FILTROS (US-04): los controla initToolFilter() en java.js -->
+        <div class="filter-bar">
+          <div>
+            <label class="visually-hidden" for="tool-search">Buscar herramienta</label>
+            <input class="filter-search" id="tool-search" type="search" placeholder="Buscar herramienta" autocomplete="off">
+          </div>
+          <div class="filter-chips" role="group" aria-label="Filtrar por categoría">
+            <button class="chip-btn" type="button" data-filter="todas" aria-pressed="true">Todas</button>
+            <button class="chip-btn" type="button" data-filter="gestion" aria-pressed="false">Gestión de pruebas</button>
+            <button class="chip-btn" type="button" data-filter="automatizacion" aria-pressed="false">Automatización</button>
+            <button class="chip-btn" type="button" data-filter="estatico" aria-pressed="false">Análisis estático</button>
+            <button class="chip-btn" type="button" data-filter="versiones" aria-pressed="false">Control de versiones</button>
+            <button class="chip-btn" type="button" data-filter="cicd" aria-pressed="false">Integración continua</button>
+            <button class="chip-btn" type="button" data-filter="rendimiento" aria-pressed="false">Rendimiento y seguridad</button>
+          </div>
+          <p class="filter-status" id="filter-count" aria-live="polite">14 herramientas</p>
+        </div>
+
+        <!-- GRILLA CSS DE TARJETAS: cada tarjeta declara su categoría en data-category -->
+        <ul class="tools-grid" data-filter-grid>
+          <li class="tool-card" data-category="gestion">
+            <span class="tag">Gestión de pruebas</span>
+            <h3>Jira</h3>
+            <p>Seguimiento de incidencias y tableros ágiles para gestionar defectos y tareas.</p>
+          </li>
+          <li class="tool-card" data-category="gestion">
+            <span class="tag">Gestión de pruebas</span>
+            <h3>TestLink</h3>
+            <p>Gestión de casos de prueba, planes y resultados de ejecución (código abierto).</p>
+          </li>
+          <li class="tool-card" data-category="automatizacion">
+            <span class="tag">Automatización</span>
+            <h3>Selenium</h3>
+            <p>Automatiza navegadores para ejecutar pruebas funcionales de aplicaciones web.</p>
+          </li>
+          <li class="tool-card" data-category="automatizacion">
+            <span class="tag">Automatización</span>
+            <h3>Cypress</h3>
+            <p>Pruebas de extremo a extremo que se ejecutan dentro del navegador.</p>
+          </li>
+          <li class="tool-card" data-category="automatizacion">
+            <span class="tag">Automatización</span>
+            <h3>JUnit</h3>
+            <p>Framework de pruebas unitarias para Java.</p>
+          </li>
+          <li class="tool-card" data-category="automatizacion">
+            <span class="tag">Automatización</span>
+            <h3>Postman</h3>
+            <p>Diseña, ejecuta y automatiza pruebas de APIs.</p>
+          </li>
+          <li class="tool-card" data-category="estatico">
+            <span class="tag">Análisis estático</span>
+            <h3>SonarQube</h3>
+            <p>Detecta errores, vulnerabilidades y deuda técnica en el código.</p>
+          </li>
+          <li class="tool-card" data-category="estatico">
+            <span class="tag">Análisis estático</span>
+            <h3>ESLint</h3>
+            <p>Analiza JavaScript para encontrar errores y hacer cumplir un estilo común.</p>
+          </li>
+          <li class="tool-card" data-category="versiones">
+            <span class="tag">Control de versiones</span>
+            <h3>Git</h3>
+            <p>Sistema de control de versiones distribuido para registrar y comparar cambios.</p>
+          </li>
+          <li class="tool-card" data-category="versiones">
+            <span class="tag">Control de versiones</span>
+            <h3>GitHub</h3>
+            <p>Aloja repositorios y facilita la revisión de código con Pull Requests.</p>
+          </li>
+          <li class="tool-card" data-category="cicd">
+            <span class="tag">Integración continua</span>
+            <h3>Jenkins</h3>
+            <p>Servidor de automatización para compilar, probar y desplegar.</p>
+          </li>
+          <li class="tool-card" data-category="cicd">
+            <span class="tag">Integración continua</span>
+            <h3>GitHub Actions</h3>
+            <p>Flujos automáticos que se ejecutan desde el repositorio ante cada cambio.</p>
+          </li>
+          <li class="tool-card" data-category="rendimiento">
+            <span class="tag">Rendimiento y seguridad</span>
+            <h3>Apache JMeter</h3>
+            <p>Pruebas de carga y de rendimiento sobre aplicaciones y servicios.</p>
+          </li>
+          <li class="tool-card" data-category="rendimiento">
+            <span class="tag">Rendimiento y seguridad</span>
+            <h3>OWASP ZAP</h3>
+            <p>Escáner de seguridad para encontrar vulnerabilidades en aplicaciones web.</p>
+          </li>
+        </ul>
+
+        <div class="empty-state" id="filter-empty" hidden>
+          <h3>No hay herramientas con esos filtros</h3>
+          <p>Prueba con otra palabra o vuelve a ver todo el catálogo.</p>
+          <button class="btn-outline" id="filter-clear" type="button">Limpiar filtros</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

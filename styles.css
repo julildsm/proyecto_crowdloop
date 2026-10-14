@@ -1,0 +1,615 @@
+/* ==========================================================================
+   styles.css — Portal SGCS · Crowd Loop · Sprint 1 (US-01 a US-06)
+   --------------------------------------------------------------------------
+   ÍNDICE
+    1. Tokens de diseño (paleta y tipografía del equipo UX/UI)
+    2. Reset y base
+    3. Utilidades y layout
+    4. Encabezado y navegación (US-01)
+    5. Botones
+    6. Hero y tarjetas de navegación (US-01)
+    7. Sobre nosotros
+    8. Cabecera de páginas internas
+    9. Pestañas y acordeón (US-02)
+   10. Tablas comparativas y flip-cards (US-03)
+   11. Filtro de herramientas (US-04)
+   12. Línea de tiempo SDLC (US-05)
+   13. Navegación interna y ventajas/desventajas (US-06)
+   14. Pie de página y aviso (toast)
+   15. Accesibilidad: movimiento reducido
+   ========================================================================== */
+
+
+/* 1. TOKENS DE DISEÑO ------------------------------------------------------ */
+:root {
+  /* Paleta oficial de las maquetas */
+  --rosy-taupe: #C5979D;
+  --dark-cyan: #4B8F8C;
+  --dusty-grape: #484D6D;
+  --twilight-indigo: #2C365E;
+  --midnight-violet: #2B193D;
+
+  /* Variante más oscura de Dark Cyan solo para fondos de botones:
+     con texto blanco alcanza contraste AA (4.9:1). El Dark Cyan original
+     se conserva para bordes y acentos. */
+  --dark-cyan-deep: #3D7A77;
+
+  /* Texto y líneas */
+  --text: #F4EEF6;
+  --text-muted: #CFC8DB;
+  --line: rgba(197, 151, 157, 0.28);
+
+  /* Código de colores ventajas / desventajas (US-06) */
+  --pro: #7FD6B8;
+  --pro-bg: rgba(75, 143, 140, 0.18);
+  --con: #F09AA5;
+  --con-bg: rgba(197, 151, 157, 0.14);
+
+  /* Tipografía: Montserrat para títulos, Inter para lectura */
+  --font-display: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  /* Forma y espacio */
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+  --header-h: 72px;
+  --container: 1120px;
+  --shadow-glow: 0 0 0 1px rgba(197, 151, 157, 0.6), 0 0 24px rgba(197, 151, 157, 0.28);
+}
+
+
+/* 2. RESET Y BASE ---------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* Scroll suave solo si la persona no pidió movimiento reducido */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+  background-color: var(--midnight-violet);
+  background-image:
+    radial-gradient(60rem 40rem at 90% -10%, rgba(72, 77, 109, 0.55), transparent 60%),
+    radial-gradient(40rem 30rem at -10% 45%, rgba(75, 143, 140, 0.16), transparent 60%);
+  background-repeat: no-repeat;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+/* El atributo hidden debe ganar siempre (lo usa el JS para mostrar/ocultar) */
+[hidden] { display: none !important; }
+
+a { color: var(--rosy-taupe); text-underline-offset: 0.2em; }
+a:hover { color: #fff; }
+
+/* Foco visible para navegación con teclado */
+:focus-visible {
+  outline: 3px solid var(--rosy-taupe);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; margin: 0 0 0.6em; }
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.01em; color: var(--rosy-taupe); }
+h2 { font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 700; color: var(--rosy-taupe); }
+h3 { font-size: 1.15rem; font-weight: 600; color: #fff; }
+h4 { font-size: 1rem; font-weight: 700; }
+
+p { margin: 0 0 1em; max-width: 70ch; }
+ul, ol { padding-left: 1.2rem; }
+
+
+/* 3. UTILIDADES Y LAYOUT --------------------------------------------------- */
+.container { width: min(100% - 2.5rem, var(--container)); margin-inline: auto; }
+.section { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.lead { font-size: clamp(1.05rem, 2vw, 1.2rem); color: var(--text); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: 1rem; top: -4rem; z-index: 200;
+  padding: 0.6rem 1rem; border-radius: var(--radius-sm);
+  background: var(--rosy-taupe); color: var(--midnight-violet); font-weight: 600;
+}
+.skip-link:focus { top: 1rem; }
+
+
+/* 4. ENCABEZADO Y NAVEGACIÓN (US-01) --------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(43, 25, 61, 0.94);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(75, 143, 140, 0.45);
+}
+
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; min-height: var(--header-h);
+}
+
+.brand {
+  display: flex; align-items: center; gap: 0.75rem;
+  color: #fff; text-decoration: none;
+  font: 700 0.95rem/1.2 var(--font-display);
+}
+.brand img { width: 44px; height: 44px; }
+
+.site-nav { display: flex; align-items: center; gap: 1.25rem; }
+.nav-list { display: flex; align-items: center; gap: 0.25rem; list-style: none; margin: 0; padding: 0; }
+
+.nav-link {
+  display: block; padding: 0.5rem 0.9rem; border-radius: 999px;
+  color: var(--text); text-decoration: none; font-size: 0.95rem; font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav-link:hover, .submenu a:hover { background: rgba(197, 151, 157, 0.14); color: #fff; }
+
+/* Indicador de sección activa: Rosy Taupe con leve resplandor */
+.nav-link[aria-current="page"],
+.nav-link.is-active {
+  color: var(--rosy-taupe);
+  background: rgba(197, 151, 157, 0.14);
+  text-shadow: 0 0 12px rgba(197, 151, 157, 0.7);
+}
+
+/* Submenús (desktop: se abren con hover o foco) */
+.has-sub { position: relative; }
+.has-sub > .nav-link::after {
+  content: ""; display: inline-block; margin-left: 0.45rem;
+  width: 0.4em; height: 0.4em;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: translateY(-0.15em) rotate(45deg);
+}
+.submenu {
+  position: absolute; top: 100%; left: 0; min-width: 250px;
+  margin: 0; padding: 0.5rem; list-style: none;
+  background: var(--twilight-indigo); border: 1px solid var(--line);
+  border-radius: var(--radius-md); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+}
+.has-sub:hover > .submenu,
+.has-sub:focus-within > .submenu { opacity: 1; visibility: visible; transform: none; }
+.submenu a {
+  display: block; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm);
+  color: var(--text); text-decoration: none; font-size: 0.92rem;
+}
+.submenu a[aria-current="page"] { color: var(--rosy-taupe); font-weight: 600; }
+
+/* Buscador */
+.site-search { position: relative; }
+.site-search input {
+  width: 12rem; padding: 0.55rem 1rem 0.55rem 2.4rem;
+  border: 1px solid transparent; border-radius: 999px;
+  background: rgba(72, 77, 109, 0.55)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CFC8DB' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")
+    no-repeat 0.85rem center / 1rem;
+  color: var(--text); font: 0.9rem var(--font-body);
+}
+.site-search input::placeholder { color: var(--text-muted); }
+.site-search input:focus { border-color: var(--dark-cyan); outline: none; }
+
+.search-results {
+  position: absolute; top: calc(100% + 0.4rem); right: 0; z-index: 60;
+  width: 20rem; max-width: 90vw; margin: 0; padding: 0.4rem; list-style: none;
+  background: var(--twilight-indigo); border: 1px solid var(--line);
+  border-radius: var(--radius-md); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+.search-results a { display: block; padding: 0.55rem 0.75rem; border-radius: var(--radius-sm); color: var(--text); text-decoration: none; font-size: 0.92rem; }
+.search-results a:hover, .search-results a:focus-visible { background: rgba(197, 151, 157, 0.16); }
+.search-results .no-results { padding: 0.55rem 0.75rem; color: var(--text-muted); font-size: 0.92rem; }
+
+/* Botón hamburguesa (solo visible en pantallas chicas) */
+.nav-toggle {
+  display: none; align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+  width: 44px; height: 44px; padding: 0; cursor: pointer;
+  background: transparent; border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.nav-toggle-bar { display: block; width: 22px; height: 2px; background: var(--rosy-taupe); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Menú móvil / tablet (hasta 1024px) */
+@media (max-width: 1024px) {
+  .nav-toggle { display: inline-flex; }
+
+  .site-nav {
+    display: none; position: absolute; inset: 100% 0 auto 0;
+    flex-direction: column; align-items: stretch; gap: 1rem;
+    padding: 1rem 1.25rem 1.5rem;
+    max-height: calc(100vh - var(--header-h)); overflow-y: auto;
+    background: var(--midnight-violet); border-bottom: 1px solid var(--line);
+  }
+  .site-nav.is-open { display: flex; }
+
+  .nav-list { flex-direction: column; align-items: stretch; }
+  .nav-link { padding: 0.7rem 0.9rem; }
+
+  /* En móvil los submenús quedan desplegados dentro del panel */
+  .submenu {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    padding: 0 0 0.25rem 1rem; background: transparent; border: 0; box-shadow: none;
+  }
+  .has-sub > .nav-link::after { display: none; }
+
+  .site-search input { width: 100%; }
+  .search-results { position: static; width: 100%; max-width: none; margin-top: 0.4rem; }
+}
+
+
+/* 5. BOTONES --------------------------------------------------------------- */
+.btn {
+  display: inline-block; padding: 0.7rem 1.4rem;
+  border: 2px solid transparent; border-radius: var(--radius-md);
+  font: 600 1rem var(--font-body); text-align: center; text-decoration: none; cursor: pointer;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.btn-primary { background: var(--dark-cyan-deep); color: #fff; }
+.btn-secondary {
+  width: 100%; padding: 0.55rem 1.2rem; font-size: 0.95rem;
+  background: var(--dark-cyan-deep); color: #fff; border-color: rgba(197, 151, 157, 0.55);
+}
+.btn:hover, .btn:focus-visible {
+  color: #fff; border-color: var(--rosy-taupe); box-shadow: 0 0 18px rgba(197, 151, 157, 0.45);
+}
+.btn-large { padding: 1rem 2.4rem; font-size: 1.2rem; }
+
+/* Botón de texto/controles auxiliares (expandir todo, limpiar filtros…) */
+.btn-outline {
+  padding: 0.5rem 1.1rem; background: transparent; color: var(--text);
+  border: 1px solid var(--line); border-radius: 999px;
+  font: 500 0.92rem var(--font-body); cursor: pointer;
+}
+.btn-outline:hover { background: rgba(197, 151, 157, 0.14); }
+
+
+/* 6. HERO Y TARJETAS DE NAVEGACIÓN (US-01) --------------------------------- */
+.hero { padding-block: clamp(2.5rem, 7vw, 5rem) clamp(1.5rem, 4vw, 3rem); }
+.hero-grid { display: grid; grid-template-columns: 1.25fr 0.75fr; align-items: center; gap: 2rem; }
+.hero .lead { max-width: 46ch; margin-bottom: 1.75rem; }
+.hero-visual { display: flex; justify-content: center; }
+
+/* Logo con animación flotante e infinita */
+.float-logo {
+  width: min(100%, 320px); height: auto;
+  filter: drop-shadow(0 0 30px rgba(197, 151, 157, 0.25));
+  animation: float 7s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-16px) rotate(3deg); }
+}
+
+/* Grilla de 4 tarjetas: 4 → 2 → 1 columnas según el ancho disponible */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; }
+
+.nav-card {
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  padding: 2rem 1.25rem 1.5rem; text-align: center;
+  background: var(--twilight-indigo); border: 1px solid rgba(43, 25, 61, 0.9);
+  border-radius: var(--radius-lg);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.nav-card:hover, .nav-card:focus-within { box-shadow: var(--shadow-glow); transform: translateY(-4px); }
+.nav-card h3 { flex: 1; display: flex; align-items: center; margin: 0; font-size: 1.2rem; }
+.card-icon {
+  width: 64px; height: 64px; fill: none; stroke: var(--rosy-taupe);
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; }
+  .float-logo { width: 150px; }
+}
+
+
+/* 7. SOBRE NOSOTROS -------------------------------------------------------- */
+.about-cta { text-align: center; margin-top: 2.5rem; }
+.team-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+.team-list li { padding: 1rem 1.2rem; background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.team-list strong { display: block; color: #fff; }
+.team-list span { color: var(--text-muted); font-size: 0.92rem; }
+
+
+/* 8. CABECERA DE PÁGINAS INTERNAS ------------------------------------------ */
+.page-hero { padding-block: clamp(2rem, 5vw, 3.5rem) 0.5rem; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.25rem; padding: 0; list-style: none; font-size: 0.9rem; color: var(--text-muted); }
+.breadcrumb li + li::before { content: "/"; margin-right: 0.4rem; }
+.breadcrumb a { color: var(--text-muted); }
+.breadcrumb [aria-current] { color: var(--text); }
+.section-title { margin-bottom: 1.25rem; }
+
+
+/* 9. PESTAÑAS Y ACORDEÓN (US-02) ------------------------------------------- */
+.tablist { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+.tab {
+  padding: 0.65rem 1.2rem; cursor: pointer;
+  background: transparent; color: var(--text);
+  border: 1px solid var(--line); border-radius: 999px;
+  font: 600 0.95rem var(--font-body);
+}
+.tab:hover { background: rgba(197, 151, 157, 0.12); }
+.tab[aria-selected="true"] { background: var(--rosy-taupe); border-color: var(--rosy-taupe); color: var(--midnight-violet); }
+
+.tab-panel {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.tab-panel > h2 { font-size: 1.4rem; }
+
+.accordion { display: grid; gap: 0.6rem; margin-top: 1.25rem; }
+.acc-item { overflow: hidden; background: rgba(43, 25, 61, 0.55); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.acc-heading { margin: 0; }
+.acc-trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  width: 100%; padding: 1rem 1.2rem; cursor: pointer;
+  background: none; border: 0; color: #fff; text-align: left;
+  font: 600 1.05rem var(--font-display);
+}
+.acc-trigger::after {
+  content: ""; flex: none; width: 0.6rem; height: 0.6rem;
+  border-right: 2px solid var(--rosy-taupe); border-bottom: 2px solid var(--rosy-taupe);
+  transform: rotate(45deg); transition: transform 0.25s;
+}
+.acc-trigger[aria-expanded="true"] { color: var(--rosy-taupe); }
+.acc-trigger[aria-expanded="true"]::after { transform: rotate(225deg); }
+.acc-panel { padding: 0 1.2rem 1.2rem; animation: reveal 0.25s ease-out; }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.def-list { display: grid; grid-template-columns: minmax(10rem, 14rem) 1fr; gap: 0.6rem 1.5rem; margin: 0; }
+.def-list dt { font-weight: 600; }
+.def-list dd { margin: 0; color: var(--text-muted); }
+@media (max-width: 640px) {
+  .def-list { grid-template-columns: 1fr; gap: 0.1rem; }
+  .def-list dd { margin-bottom: 0.7rem; }
+}
+
+.chip-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.chip-list li { padding: 0.3rem 0.8rem; font-size: 0.9rem; background: rgba(75, 143, 140, 0.22); border: 1px solid rgba(75, 143, 140, 0.6); border-radius: 999px; }
+
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.info-card { padding: 1.1rem 1.3rem; background: rgba(43, 25, 61, 0.55); border: 1px solid var(--line); border-left: 4px solid var(--dark-cyan); border-radius: var(--radius-md); }
+.info-card h3 { margin-bottom: 0.4rem; }
+.info-card p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+.panel-note { margin-top: 1.25rem; }
+
+
+/* 9b. TARJETA RESUMEN DE GESTIÓN DE CALIDAD (US-02 + US-03 + US-04) -------- */
+.quality-card {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-lg);
+}
+.quality-card > h2 { margin-bottom: 0.25rem; }
+.eyebrow { margin: 0 0 0.9rem; color: var(--text-muted); font: 700 0.85rem var(--font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+
+/* Vistazo rápido de cada norma: grilla de 2 columnas x 3 filas */
+.iso-panel { padding: clamp(1rem, 3vw, 1.5rem); }
+.iso-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem 1.5rem; }
+.iso-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; }
+.iso-icon { flex: none; width: 26px; height: 26px; fill: none; stroke: var(--rosy-taupe); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 560px) { .iso-grid { grid-template-columns: 1fr; } }
+
+/* Dos columnas: técnicas (US-03) y herramientas (US-04) */
+.quality-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 2rem; }
+.mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.9rem; }
+.mini-card {
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem; padding: 1.1rem 0.8rem;
+  text-align: center; background: rgba(43, 25, 61, 0.55); border: 1px solid var(--line); border-radius: var(--radius-md);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.mini-card.is-active { border-color: var(--rosy-taupe); box-shadow: var(--shadow-glow); }
+.mini-icon { width: 34px; height: 34px; fill: none; stroke: var(--dark-cyan); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mini-card h4 { flex: 1; margin: 0; font-size: 0.98rem; }
+@media (max-width: 760px) { .quality-split { grid-template-columns: 1fr; } }
+
+/* Panel de resultados del filtro */
+.filter-results { margin-top: 1.5rem; padding: 1.1rem 1.3rem; background: rgba(43, 25, 61, 0.55); border: 1px dashed var(--line); border-radius: var(--radius-md); display: grid; gap: 0.9rem; }
+.filter-hint { margin: 0; color: var(--text-muted); }
+.filter-result-item h4 { margin-bottom: 0.3rem; color: var(--rosy-taupe); }
+.filter-result-item p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+
+.quality-card-foot { margin: 1.5rem 0 0; color: var(--text-muted); font-size: 0.95rem; }
+
+
+/* 10. TABLAS COMPARATIVAS Y FLIP-CARDS (US-03) ----------------------------- */
+.table-wrap { overflow-x: auto; background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.compare-table { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 0.95rem; }
+.compare-table caption { padding: 1rem 1.2rem; text-align: left; font: 700 1.05rem var(--font-display); color: var(--rosy-taupe); }
+.compare-table th, .compare-table td { padding: 0.85rem 1.2rem; text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+.compare-table thead th { background: rgba(72, 77, 109, 0.6); color: #fff; }
+.compare-table thead th.col-a { border-bottom: 3px solid var(--dark-cyan); }
+.compare-table thead th.col-b { border-bottom: 3px solid var(--rosy-taupe); }
+.compare-table tbody th { width: 22%; font-weight: 600; color: var(--text); }
+.compare-table td { color: var(--text-muted); }
+.table-gap { margin-top: 2rem; }
+
+.flip-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+.flip-card { display: grid; min-height: 320px; perspective: 1200px; }
+.flip-inner { display: grid; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+.flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-face {
+  grid-area: 1 / 1; display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+.flip-front { background: var(--twilight-indigo); cursor: pointer; }
+.flip-back  { background: var(--dusty-grape); transform: rotateY(180deg); cursor: pointer; }
+.flip-face h3 { margin: 0; }
+.flip-face p, .flip-face li { color: var(--text); font-size: 0.95rem; }
+.flip-face p { margin: 0; }
+.flip-face ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; }
+.flip-face .btn { margin-top: auto; }
+.flip-face .flip-note { color: var(--text-muted); font-size: 0.9rem; }
+
+/* Variante de flip-card para US-06: ventajas/desventajas cortas + diagrama en el reverso */
+.flip-subhead { margin: 0.6rem 0 0.3rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.pc-pros-text { color: var(--pro); }
+.pc-cons-text { color: var(--con); }
+.flip-points { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; font-size: 0.9rem; }
+.model-diagram { width: 100%; height: auto; }
+
+
+/* 11. FILTRO DE HERRAMIENTAS (US-04) --------------------------------------- */
+.filter-bar { display: grid; gap: 1rem; margin-bottom: 1.5rem; }
+.filter-search {
+  width: 100%; max-width: 26rem; padding: 0.7rem 1rem 0.7rem 2.6rem;
+  border: 1px solid var(--line); border-radius: 999px; color: var(--text); font: 1rem var(--font-body);
+  background: rgba(72, 77, 109, 0.45)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23CFC8DB' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")
+    no-repeat 0.95rem center / 1.1rem;
+}
+.filter-search:focus { border-color: var(--dark-cyan); outline: none; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip-btn {
+  padding: 0.5rem 1rem; cursor: pointer; background: transparent; color: var(--text);
+  border: 1px solid var(--line); border-radius: 999px; font: 500 0.92rem var(--font-body);
+}
+.chip-btn:hover { background: rgba(197, 151, 157, 0.12); }
+.chip-btn[aria-pressed="true"] { background: var(--dark-cyan-deep); border-color: var(--dark-cyan); color: #fff; }
+.filter-status { margin: 0; color: var(--text-muted); font-size: 0.92rem; }
+
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.1rem; margin: 0; padding: 0; list-style: none; }
+.tool-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.4rem; background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.tool-card h3 { margin: 0; }
+.tool-card p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+.tag { align-self: flex-start; padding: 0.2rem 0.7rem; font-size: 0.8rem; font-weight: 600; color: #A9E3DA; background: rgba(75, 143, 140, 0.25); border: 1px solid rgba(75, 143, 140, 0.6); border-radius: 999px; }
+
+.empty-state { padding: 2rem; text-align: center; background: var(--twilight-indigo); border: 1px dashed var(--line); border-radius: var(--radius-md); }
+.empty-state p { margin-inline: auto; }
+
+
+/* 12. LÍNEA DE TIEMPO SDLC (US-05) ----------------------------------------- */
+.timeline-toolbar { display: flex; justify-content: flex-end; }
+.timeline { --progress: 0; position: relative; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+
+/* Riel de la línea (::before) y tramo iluminado según el scroll (::after) */
+.timeline::before, .timeline::after {
+  content: ""; position: absolute; top: 0; left: 50%; width: 4px; margin-left: -2px; border-radius: 2px;
+}
+.timeline::before { bottom: 0; background: rgba(72, 77, 109, 0.9); }
+.timeline::after {
+  height: calc(var(--progress) * 100%);
+  background: linear-gradient(var(--dark-cyan), var(--rosy-taupe));
+  box-shadow: 0 0 14px rgba(197, 151, 157, 0.6);
+}
+
+/* Desktop: las fases alternan izquierda / derecha de la línea */
+.tl-item { position: relative; width: 50%; padding: 0 2.75rem 2rem 0; }
+.tl-item:nth-child(even) { margin-left: 50%; padding: 0 0 2rem 2.75rem; }
+
+.tl-marker {
+  position: absolute; top: 1.1rem; right: -11px; z-index: 1; width: 22px; height: 22px;
+  background: var(--midnight-violet); border: 3px solid var(--dusty-grape); border-radius: 50%;
+  transition: border-color 0.4s, box-shadow 0.4s, background-color 0.4s;
+}
+.tl-item:nth-child(even) .tl-marker { right: auto; left: -11px; }
+.tl-item.is-lit .tl-marker {
+  background: var(--rosy-taupe); border-color: var(--rosy-taupe);
+  box-shadow: 0 0 0 5px rgba(197, 151, 157, 0.2), 0 0 18px rgba(197, 151, 157, 0.8);
+}
+
+.tl-card { background: var(--twilight-indigo); border: 1px solid var(--line); border-radius: var(--radius-md); transition: border-color 0.3s, box-shadow 0.3s; }
+.tl-item.is-lit .tl-card { border-color: rgba(197, 151, 157, 0.55); }
+.tl-item.is-active .tl-card { box-shadow: var(--shadow-glow); }
+
+.tl-toggle {
+  display: grid; gap: 0.25rem; width: 100%; padding: 1.1rem 1.3rem; cursor: pointer;
+  background: none; border: 0; color: var(--text); text-align: left; font: inherit;
+}
+.tl-phase { font-size: 0.85rem; font-weight: 600; color: var(--rosy-taupe); }
+.tl-title { font: 700 1.2rem var(--font-display); color: #fff; }
+.tl-summary { color: var(--text-muted); font-size: 0.95rem; }
+.tl-toggle::after { content: "Ver detalle"; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--rosy-taupe); }
+.tl-toggle[aria-expanded="true"]::after { content: "Ocultar detalle"; }
+.tl-body { padding: 0 1.3rem 1.3rem; animation: reveal 0.25s ease-out; }
+
+/* Móvil: línea a la izquierda y todas las fases en una sola columna */
+@media (max-width: 760px) {
+  .timeline::before, .timeline::after { left: 14px; }
+  .tl-item, .tl-item:nth-child(even) { width: 100%; margin-left: 0; padding: 0 0 1.5rem 3rem; }
+  .tl-marker, .tl-item:nth-child(even) .tl-marker { left: 3px; right: auto; }
+}
+
+
+/* 13. NAVEGACIÓN INTERNA Y VENTAJAS / DESVENTAJAS (US-06) ------------------ */
+.quicknav {
+  position: sticky; top: var(--header-h); z-index: 40; overflow-x: auto;
+  background: rgba(43, 25, 61, 0.95);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.quicknav ul {
+  display: flex; gap: 0.5rem; margin: 0; list-style: none; white-space: nowrap;
+  padding: 0.75rem max(1.25rem, calc((100% - var(--container)) / 2));
+}
+.quicknav a {
+  display: block; padding: 0.45rem 1rem; color: var(--text); text-decoration: none;
+  font-size: 0.92rem; font-weight: 500; border: 1px solid var(--line); border-radius: 999px;
+}
+.quicknav a:hover { background: rgba(197, 151, 157, 0.14); color: #fff; }
+.quicknav a[aria-current] { background: var(--rosy-taupe); border-color: var(--rosy-taupe); color: var(--midnight-violet); }
+
+.model { padding-block: 2.5rem; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 4.5rem); }
+.model:last-child { border-bottom: 0; }
+.model-meta { color: var(--text-muted); }
+.model-meta strong { color: var(--text); }
+
+.pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.25rem; }
+.pc-block { padding: 1.25rem 1.4rem; border: 1px solid; border-radius: var(--radius-md); }
+.pc-block h4 { margin-bottom: 0.8rem; font-size: 1.05rem; }
+.pc-block ul { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+.pc-block li { position: relative; padding-left: 1.7rem; }
+.pc-block li::before { position: absolute; left: 0; font-weight: 700; }
+/* Verde-turquesa = ventaja · Rosa = desventaja (además del color, se usan ✓ y ✕) */
+.pc-pros { background: var(--pro-bg); border-color: rgba(127, 214, 184, 0.5); }
+.pc-pros h4, .pc-pros li::before { color: var(--pro); }
+.pc-pros li::before { content: "✓"; }
+.pc-cons { background: var(--con-bg); border-color: rgba(240, 154, 165, 0.5); }
+.pc-cons h4, .pc-cons li::before { color: var(--con); }
+.pc-cons li::before { content: "✕"; }
+
+@media (max-width: 760px) { .pros-cons { grid-template-columns: 1fr; } }
+
+
+/* 14. PIE DE PÁGINA Y AVISO (TOAST) ---------------------------------------- */
+.site-footer { margin-top: 3rem; padding-block: 1.5rem; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--text-muted); }
+.footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.footer-inner p { margin: 0; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
+.footer-links a { color: var(--text-muted); }
+
+.toast {
+  position: fixed; left: 50%; bottom: 1.5rem; z-index: 100; max-width: calc(100% - 2rem);
+  padding: 0.8rem 1.4rem; opacity: 0; pointer-events: none;
+  background: var(--rosy-taupe); color: var(--midnight-violet); font-weight: 600; border-radius: var(--radius-md);
+  transform: translate(-50%, 1rem); transition: opacity 0.25s, transform 0.25s;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+
+/* 15. ACCESIBILIDAD: MOVIMIENTO REDUCIDO ----------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de la calidad | SGCS · Crowd Loop</title>
+  <meta name="description" content="Estándares ISO/IEC 9126 y 25000, técnicas de aseguramiento y herramientas de calidad del software.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN (US-01) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link is-active" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html" aria-current="page">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          <!-- Página prevista para un próximo sprint: data-coming-soon muestra un aviso -->
+          <li><a class="nav-link" href="metodologias.html" data-coming-soon>Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li aria-current="page">Calidad</li></ol></nav>
+        <h1>Gestión de la calidad: estándares, aseguramiento y herramientas</h1>
+        <p class="lead">Explorá los fundamentos, técnicas e instrumentos esenciales para garantizar la excelencia del software.</p>
+      </div>
+    </section>
+
+    <!-- EXPLICACIÓN GENERAL: qué es la calidad de software y por qué importa -->
+    <section class="section" aria-labelledby="intro-title">
+      <div class="container">
+        <h2 id="intro-title" class="section-title">¿Qué es la calidad de software?</h2>
+        <p><strong>La calidad de software es el grado en que un programa cumple con los requisitos establecidos y satisface las necesidades de sus usuarios. Un software de calidad debe funcionar correctamente, de forma segura, eficiente y confiable, además de ser fácil de usar y mantener. También busca detectar y prevenir errores para garantizar que el sistema tenga un buen funcionamiento y cumpla con los objetivos para los que fue creado.</strong></p>
+      </div>
+    </section>
+
+    <!-- TARJETA RESUMEN: cruza US-02 (estándares), US-03 (técnicas) y US-04 (herramientas) -->
+    <section class="section" aria-labelledby="quality-card-title">
+      <div class="container">
+        <div class="quality-card">
+          <h2 id="quality-card-title">Gestión de la calidad</h2>
+
+          <!-- US-02: métricas + pestañas con los 6 vistazos rápidos de cada norma -->
+          <p class="eyebrow">US-02: Métricas y estándares de calidad</p>
+          <p>Una métrica convierte una característica de calidad en un número que se puede seguir: puede ser <strong>interna</strong> (se calcula sobre el código), <strong>externa</strong> (se mide ejecutando el software) o <strong>en uso</strong> (se observa con usuarios reales). ISO 9126 y 25000 organizan esas métricas en las siguientes características:</p>
+          <div data-tabs>
+            <div class="tablist" role="tablist" aria-label="Normas de calidad">
+              <button class="tab" role="tab" id="qtab-9126" aria-controls="qpanel-9126" aria-selected="true" type="button">ISO 9126</button>
+              <button class="tab" role="tab" id="qtab-25000" aria-controls="qpanel-25000" aria-selected="false" tabindex="-1" type="button">ISO 25000</button>
+            </div>
+
+            <div class="tab-panel iso-panel" role="tabpanel" id="qpanel-9126" aria-labelledby="qtab-9126" tabindex="0">
+              <div class="iso-grid">
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Funcionalidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Fiabilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Usabilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Eficiencia</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Mantenibilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Portabilidad</span></div>
+              </div>
+            </div>
+
+            <div class="tab-panel iso-panel" role="tabpanel" id="qpanel-25000" aria-labelledby="qtab-25000" tabindex="0" hidden>
+              <div class="iso-grid">
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Adecuación funcional</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Eficiencia de desempeño</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Compatibilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Usabilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Fiabilidad</span></div>
+                <div class="iso-item"><svg class="iso-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Seguridad</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- US-03 y US-04: dos columnas con tarjetas chicas y botón "Filtrar" -->
+          <div class="quality-split">
+            <div class="mini-group">
+              <p class="eyebrow">US-03: Técnicas de aseguramiento</p>
+              <div class="mini-grid">
+                <article class="mini-card">
+                  <svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor" opacity=".18"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                  <h4>Pruebas de Caja Negra</h4>
+                  <button class="chip-btn" type="button" data-filter-item="caja-negra" aria-pressed="false" aria-controls="quality-filter-results">Filtrar</button>
+                </article>
+                <article class="mini-card">
+                  <svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                  <h4>Pruebas de Caja Blanca</h4>
+                  <button class="chip-btn" type="button" data-filter-item="caja-blanca" aria-pressed="false" aria-controls="quality-filter-results">Filtrar</button>
+                </article>
+              </div>
+            </div>
+
+            <div class="mini-group">
+              <p class="eyebrow">US-04: Herramientas de calidad</p>
+              <div class="mini-grid">
+                <article class="mini-card">
+                  <svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="5"/><path d="M12 8V5M9 10 6 7M15 10l3-3M7 13H3M21 13h-4M9 18l-2 2M15 18l2 2"/></svg>
+                  <h4>Bug Trackers</h4>
+                  <button class="chip-btn" type="button" data-filter-item="bug-trackers" aria-pressed="false" aria-controls="quality-filter-results">Filtrar</button>
+                </article>
+                <article class="mini-card">
+                  <svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 3 12l5 6M16 6l5 6-5 6"/></svg>
+                  <h4>Linters</h4>
+                  <button class="chip-btn" type="button" data-filter-item="linters" aria-pressed="false" aria-controls="quality-filter-results">Filtrar</button>
+                </article>
+                <article class="mini-card">
+                  <svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4h6v2H9z"/><path d="m9 13 2 2 4-4"/></svg>
+                  <h4>Test Management</h4>
+                  <button class="chip-btn" type="button" data-filter-item="test-management" aria-pressed="false" aria-controls="quality-filter-results">Filtrar</button>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel de resultados del filtro (US-03/US-04): lo arma initQualityFilters() en java.js -->
+          <div class="filter-results" id="quality-filter-results" aria-live="polite">
+            <p class="filter-hint">Elegí una o más categorías para ver el detalle.</p>
+          </div>
+
+          <p class="quality-card-foot">¿Buscás el detalle completo? Mirá todas las <a href="tecnicas.html">técnicas de aseguramiento</a> o todas las <a href="herramientas.html">herramientas de calidad</a>.</p>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
