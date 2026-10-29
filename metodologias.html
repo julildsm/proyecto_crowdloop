@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metodologías ágiles | SGCS · Crowd Loop</title>
+  <meta name="description" content="Scrum y Kanban en detalle: roles, eventos y artefactos, y un tablero Kanban interactivo para practicar el flujo de trabajo.">
+  <link rel="icon" href="imagenes/logo.png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="java.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ENCABEZADO Y MENÚ DE NAVEGACIÓN (US-01) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Sistemas de Gestión de Calidad, ir al inicio">
+        <img src="imagenes/logo.png" alt="" width="44" height="44">
+        <span>Sistemas de Gestión<br>de Calidad</span>
+      </a>
+
+      <!-- Botón hamburguesa: lo controla initNavigation() en java.js -->
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="fundamentos.html">Calidad</a>
+            <ul class="submenu">
+              <li><a href="fundamentos.html">Fundamentos de calidad</a></li>
+              <li><a href="tecnicas.html">Técnicas de aseguramiento</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <a class="nav-link" href="sdlc.html">Procesos</a>
+            <ul class="submenu">
+              <li><a href="sdlc.html">Ciclo de vida (SDLC)</a></li>
+              <li><a href="sdlc.html#models-title">Modelos tradicionales</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link is-active" href="metodologias.html" aria-current="page">Metodologías</a></li>
+          <li class="has-sub">
+            <a class="nav-link" href="herramientas.html">Recursos</a>
+            <ul class="submenu">
+              <li><a href="herramientas.html">Herramientas de calidad</a></li>
+              <li><a href="glosario.html" data-coming-soon>Glosario</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <form class="site-search" role="search" autocomplete="off">
+          <label class="visually-hidden" for="site-search-input">Buscar en el sitio</label>
+          <input id="site-search-input" type="search" placeholder="Buscar">
+        </form>
+      </nav>
+    </div>
+  </header>
+
+<main id="contenido">
+
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li aria-current="page">Metodologías</li></ol></nav>
+        <h1>Metodologías ágiles en detalle</h1>
+        <p class="lead">Profundizá en Scrum y Kanban: roles, eventos y artefactos, y un tablero para practicar el flujo de trabajo.</p>
+      </div>
+    </section>
+
+    <!-- US-10: SCRUM FRAMEWORK (pestañas + acordeones; los controlan initTabs(), initAccordions() e initExpandAll() en java.js) -->
+    <section class="section" aria-labelledby="scrum-title">
+      <div class="container">
+        <div class="method-card">
+          <h2 id="scrum-title">US-10 Scrum framework</h2>
+
+          <div data-tabs>
+            <div class="tablist" role="tablist" aria-label="Scrum framework">
+              <button class="tab" role="tab" id="stab-roles" aria-controls="spanel-roles" aria-selected="false" tabindex="-1" type="button">Roles</button>
+              <button class="tab" role="tab" id="stab-events" aria-controls="spanel-events" aria-selected="true" type="button">Events</button>
+              <button class="tab" role="tab" id="stab-artifacts" aria-controls="spanel-artifacts" aria-selected="false" tabindex="-1" type="button">Artifacts</button>
+            </div>
+          <div class="tab-panel" role="tabpanel" id="spanel-roles" aria-labelledby="stab-roles" tabindex="0" hidden>
+            <div class="accordion scrum-list" data-accordion>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sr-t-1" aria-expanded="false" aria-controls="sr-p-1" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg>
+                  <span class="item-text"><span class="item-title">Product Owner</span><span class="item-desc">Maximiza el valor del producto y ordena el Product Backlog.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sr-p-1" role="region" aria-labelledby="sr-t-1" hidden>
+                <p>Es una sola persona, no un comité. Decide qué se construye y en qué orden, comunica el Product Goal y define qué aporta más valor al producto.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sr-t-2" aria-expanded="false" aria-controls="sr-p-2" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+                  <span class="item-text"><span class="item-title">Scrum Master</span><span class="item-desc">Ayuda al equipo a entender y aplicar Scrum.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sr-p-2" role="region" aria-labelledby="sr-t-2" hidden>
+                <p>Es un líder-servidor: quita impedimentos, facilita los eventos cuando hace falta y protege al equipo de las interrupciones. No es un jefe de proyecto.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sr-t-3" aria-expanded="false" aria-controls="sr-p-3" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+                  <span class="item-text"><span class="item-title">Developers</span><span class="item-desc">Construyen un Increment utilizable en cada Sprint.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sr-p-3" role="region" aria-labelledby="sr-t-3" hidden>
+                <p>Son quienes hacen el trabajo: diseñan, programan y prueban. Se autoorganizan, arman el Sprint Backlog y son responsables de la calidad (Definition of Done).</p>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="spanel-events" aria-labelledby="stab-events" tabindex="0">
+            <p class="method-lead">Todos suceden dentro del Sprint, que dura entre 1 y 4 semanas.</p>
+            <div class="accordion scrum-list" data-accordion>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="se-t-1" aria-expanded="false" aria-controls="se-p-1" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h4"/></svg>
+                  <span class="item-text"><span class="item-title">Sprint Planning</span><span class="item-desc">Se define qué se hace en el Sprint y cómo.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="se-p-1" role="region" aria-labelledby="se-t-1" hidden>
+                <p>Abre el Sprint (hasta 8 horas para un Sprint de un mes). El equipo acuerda el Sprint Goal y elige del Product Backlog los ítems que formarán el Sprint Backlog.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="se-t-2" aria-expanded="false" aria-controls="se-p-2" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                  <span class="item-text"><span class="item-title">Daily Scrum</span><span class="item-desc">15 minutos diarios para sincronizar y detectar bloqueos.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="se-p-2" role="region" aria-labelledby="se-t-2" hidden>
+                <p>Los Developers revisan el avance hacia el Sprint Goal y ajustan el plan de las próximas 24 horas. Dura 15 minutos, a la misma hora y en el mismo lugar.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="se-t-3" aria-expanded="false" aria-controls="se-p-3" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21l4-5 4 5M7 10l3 2 4-4"/></svg>
+                  <span class="item-text"><span class="item-title">Sprint Review</span><span class="item-desc">Se muestra el Increment y se recoge feedback.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="se-p-3" role="region" aria-labelledby="se-t-3" hidden>
+                <p>Al final del Sprint (hasta 4 horas para un Sprint de un mes). El Scrum Team presenta lo logrado a los interesados y ajusta el Product Backlog según lo que aprende.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="se-t-4" aria-expanded="false" aria-controls="se-p-4" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></svg>
+                  <span class="item-text"><span class="item-title">Sprint Retrospective</span><span class="item-desc">El equipo analiza cómo trabajó y qué mejorar.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="se-p-4" role="region" aria-labelledby="se-t-4" hidden>
+                <p>Cierra el Sprint (hasta 3 horas para un Sprint de un mes). Se revisa qué salió bien y qué no, y se acuerda al menos una mejora concreta para el próximo Sprint.</p>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="spanel-artifacts" aria-labelledby="stab-artifacts" tabindex="0" hidden>
+            <div class="accordion scrum-list" data-accordion>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sa-t-1" aria-expanded="false" aria-controls="sa-p-1" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                  <span class="item-text"><span class="item-title">Product Backlog</span><span class="item-desc">Lista ordenada de todo lo que puede hacer falta en el producto.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sa-p-1" role="region" aria-labelledby="sa-t-1" hidden>
+                <p>La gestiona el Product Owner y nunca está terminada: evoluciona con lo que se aprende. Su compromiso es el Product Goal.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sa-t-2" aria-expanded="false" aria-controls="sa-p-2" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h12M9 12h12M9 18h12M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/></svg>
+                  <span class="item-text"><span class="item-title">Sprint Backlog</span><span class="item-desc">Lo elegido para el Sprint más el plan para lograrlo.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sa-p-2" role="region" aria-labelledby="sa-t-2" hidden>
+                <p>Pertenece a los Developers e incluye el Sprint Goal, los ítems seleccionados y el plan de trabajo. Se actualiza durante el Sprint. Su compromiso es el Sprint Goal.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h3 class="acc-heading"><button class="acc-trigger" id="sa-t-3" aria-expanded="false" aria-controls="sa-p-3" type="button">
+                <span class="item-head">
+                  <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>
+                  <span class="item-text"><span class="item-title">Increment</span><span class="item-desc">Un paso concreto hacia el Product Goal, utilizable y verificado.</span></span>
+                </span>
+              </button></h3>
+              <div class="acc-panel" id="sa-p-3" role="region" aria-labelledby="sa-t-3" hidden>
+                <p>Suma todos los Increments anteriores y debe cumplir la Definition of Done, que es su compromiso. Es donde se ve la calidad real del producto.</p>
+              </div>
+            </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="method-cta">
+            <button class="btn btn-secondary" id="scrum-expand" data-expand-all type="button">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- US-11: KANBAN BOARD (tablero simulado: lo arma initKanban() en java.js) -->
+    <section class="section" aria-labelledby="kanban-title">
+      <div class="container">
+        <div class="method-card">
+          <h2 id="kanban-title">US-11 Kanban board</h2>
+          <p class="method-lead">Tablero de práctica: arrastrá las tarjetas entre columnas (o usá las flechas). La columna En proceso admite como máximo 2 tarjetas.</p>
+
+          <div class="kanban" data-kanban>
+            <div class="kanban-col" data-col="todo">
+              <h3 class="kanban-head">Por hacer (To Do) <span class="kanban-count"></span></h3>
+              <ul class="kanban-list"></ul>
+            </div>
+            <div class="kanban-col" data-col="doing">
+              <h3 class="kanban-head">En proceso (WIP Limit: 2) <span class="kanban-count"></span></h3>
+              <ul class="kanban-list"></ul>
+            </div>
+            <div class="kanban-col" data-col="done">
+              <h3 class="kanban-head">Hecho (Done) <span class="kanban-count"></span></h3>
+              <ul class="kanban-list"></ul>
+            </div>
+          </div>
+          <p class="kanban-status" id="kanban-status" role="status"></p>
+          <div class="method-cta">
+            <button class="btn-outline" id="kanban-reset" type="button">Reiniciar tablero</button>
+          </div>
+
+          <h3 class="steps-title">Guía de Kanban paso a paso</h3>
+          <div class="accordion scrum-list" data-accordion data-single>
+            <div class="acc-item">
+              <h4 class="acc-heading"><button class="acc-trigger" id="kb-t-1" aria-expanded="true" aria-controls="kb-p-1" type="button">
+                <span class="item-head"><span class="step-num" aria-hidden="true">1</span><span class="item-title">Visualizá el flujo de trabajo</span></span>
+              </button></h4>
+              <div class="acc-panel" id="kb-p-1" role="region" aria-labelledby="kb-t-1">
+                <p>Dibujá el proceso real del equipo en columnas (por ejemplo Por hacer, En proceso y Hecho) y representá cada tarea con una tarjeta. Lo que no se ve, no se puede gestionar.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h4 class="acc-heading"><button class="acc-trigger" id="kb-t-2" aria-expanded="false" aria-controls="kb-p-2" type="button">
+                <span class="item-head"><span class="step-num" aria-hidden="true">2</span><span class="item-title">Limitá el trabajo en curso (WIP)</span></span>
+              </button></h4>
+              <div class="acc-panel" id="kb-p-2" role="region" aria-labelledby="kb-t-2" hidden>
+                <p>Fijá un máximo de tarjetas por columna. Si se llega al tope, nadie empieza algo nuevo hasta que otra tarjeta avance. Menos cosas a la vez significa menos esperas y más trabajo terminado.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h4 class="acc-heading"><button class="acc-trigger" id="kb-t-3" aria-expanded="false" aria-controls="kb-p-3" type="button">
+                <span class="item-head"><span class="step-num" aria-hidden="true">3</span><span class="item-title">Gestioná el flujo</span></span>
+              </button></h4>
+              <div class="acc-panel" id="kb-p-3" role="region" aria-labelledby="kb-t-3" hidden>
+                <p>Mirá cuánto tarda una tarjeta de principio a fin (lead time) y buscá los cuellos de botella: las columnas donde las tarjetas se acumulan.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h4 class="acc-heading"><button class="acc-trigger" id="kb-t-4" aria-expanded="false" aria-controls="kb-p-4" type="button">
+                <span class="item-head"><span class="step-num" aria-hidden="true">4</span><span class="item-title">Hacé explícitas las políticas</span></span>
+              </button></h4>
+              <div class="acc-panel" id="kb-p-4" role="region" aria-labelledby="kb-t-4" hidden>
+                <p>Escribí qué significa "hecho", cuándo una tarjeta puede pasar de columna y quién lo decide. Así todo el equipo trabaja con las mismas reglas.</p>
+              </div>
+            </div>
+            <div class="acc-item">
+              <h4 class="acc-heading"><button class="acc-trigger" id="kb-t-5" aria-expanded="false" aria-controls="kb-p-5" type="button">
+                <span class="item-head"><span class="step-num" aria-hidden="true">5</span><span class="item-title">Mejorá de forma continua</span></span>
+              </button></h4>
+              <div class="acc-panel" id="kb-p-5" role="region" aria-labelledby="kb-t-5" hidden>
+                <p>Revisá el tablero y los tiempos con regularidad, hacé cambios pequeños y comprobá si funcionaron antes de seguir.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 Crowd Loop — Sistemas de Gestión de Calidad de Software</p>
+      <ul class="footer-links">
+        <li><a href="aviso-legal.html" data-coming-soon>Aviso Legal</a></li>
+        <li><a href="privacidad.html" data-coming-soon>Política de Privacidad</a></li>
+        <li><a href="contacto.html" data-coming-soon>Contacto</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

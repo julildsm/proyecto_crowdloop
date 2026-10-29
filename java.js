@@ -1,4 +1,3 @@
-
 /**
  * java.js — Lógica de interacción · Portal SGCS · Crowd Loop · Sprint 1
  * ---------------------------------------------------------------------------
@@ -124,7 +123,9 @@
     { title: 'Técnicas de aseguramiento de calidad', url: 'tecnicas.html', keywords: 'verificacion validacion revision inspeccion walkthrough caja blanca negra auditoria' },
     { title: 'Herramientas de calidad', url: 'herramientas.html', keywords: 'selenium jira sonarqube git jenkins jmeter cypress postman junit eslint' },
     { title: 'Ciclo de vida del software (SDLC)', url: 'sdlc.html', keywords: 'sdlc planificacion requisitos diseno implementacion pruebas despliegue mantenimiento linea de tiempo' },
-    { title: 'Modelos tradicionales de desarrollo', url: 'sdlc.html#models-title', keywords: 'cascada modelo en v incremental espiral prototipado ventajas desventajas' }
+    { title: 'Scrum framework', url: 'metodologias.html#scrum-title', keywords: 'scrum roles eventos events artefactos product owner scrum master developers sprint daily retrospectiva backlog increment' },
+    { title: 'Kanban board', url: 'metodologias.html#kanban-title', keywords: 'kanban tablero wip flujo columnas tarjetas limite' },
+    { title: 'Modelos tradicionales de desarrollo', url: 'sdlc.html#models-title', keywords: 'cascada modelo en v iterativo ventajas desventajas esquema' }
   ];
 
   function initSearch() {
@@ -529,6 +530,259 @@
   }
 
   /* ==========================================================================
+     US-10 · BOTÓN "VER DETALLES" (Scrum)
+     Abre (o cierra) todos los acordeones del panel de pestaña visible.
+     Al cambiar de pestaña el botón vuelve a su texto inicial.
+     ========================================================================== */
+
+  function initExpandAll() {
+    $$('[data-expand-all]').forEach((button) => {
+      const root = button.closest('.method-card');
+      if (!root) return;
+
+      button.addEventListener('click', () => {
+        const panel = $$('[role="tabpanel"]', root).find((p) => !p.hidden) || root;
+        const triggers = $$('.acc-trigger', panel);
+        const openAll = triggers.some((t) => t.getAttribute('aria-expanded') !== 'true');
+        triggers.forEach((t) => setAccordionItem(t, openAll));
+        button.textContent = openAll ? 'Ocultar detalles' : 'Ver detalles';
+      });
+
+      root.addEventListener('click', (event) => {
+        if (event.target.closest('[role="tab"]')) button.textContent = 'Ver detalles';
+      });
+    });
+  }
+
+  /* ==========================================================================
+     US-11 · TABLERO KANBAN SIMULADO
+     - Las tarjetas se arrastran entre columnas (o se mueven con las flechas).
+     - "En proceso" respeta un límite WIP: si ya tiene 2 tarjetas, no deja
+       entrar otra y avisa (así se practica la regla de limitar el trabajo).
+     - El estado vive en el arreglo "cards"; render() vuelve a dibujar todo.
+     ========================================================================== */
+
+  const KANBAN_COLUMNS = [
+    { id: 'todo', name: 'Por hacer' },
+    { id: 'doing', name: 'En proceso' },
+    { id: 'done', name: 'Hecho' }
+  ];
+  const KANBAN_WIP_LIMIT = 2;
+  const KANBAN_INITIAL = [
+    { title: 'Diseñar US-10', col: 0 },
+    { title: 'Pruebas unit. US-11', col: 0 },
+    { title: 'Pruebas unit. US-03', col: 1 },
+    { title: 'Maquetar US-04', col: 1 },
+    { title: 'Pruebas unit. US-02', col: 2 },
+    { title: 'Revisión QC/QA US-01', col: 2 }
+  ];
+
+  function initKanban() {
+    const board = $('[data-kanban]');
+    if (!board) return;
+
+    const status = $('#kanban-status');
+    const resetButton = $('#kanban-reset');
+    let cards = [];
+
+    /** Crea un botón de flecha (dir = -1 atrás, +1 adelante). Sirve para teclado y celular. */
+    function makeButton(card, dir) {
+      const target = KANBAN_COLUMNS[card.col + dir].name;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'kanban-btn';
+      button.dataset.dir = String(dir);
+      button.textContent = dir < 0 ? '←' : '→';
+      button.setAttribute('aria-label', 'Mover «' + card.title + '» a ' + target);
+      return button;
+    }
+
+    /** Dibuja las tres columnas según el estado actual. */
+    function render() {
+      KANBAN_COLUMNS.forEach((column, index) => {
+        const element = $('[data-col="' + column.id + '"]', board);
+        const list = $('.kanban-list', element);
+        const inColumn = cards.filter((card) => card.col === index);
+
+        $('.kanban-count', element).textContent = index === 1 ? inColumn.length + '/' + KANBAN_WIP_LIMIT : inColumn.length;
+        list.innerHTML = '';
+
+        if (!inColumn.length) {
+          const empty = document.createElement('li');
+          empty.className = 'kanban-empty';
+          empty.textContent = 'Sin tarjetas';
+          list.appendChild(empty);
+        }
+
+        inColumn.forEach((card) => {
+          const item = document.createElement('li');
+          item.className = 'kanban-card';
+          item.dataset.cardId = String(card.id);
+
+          const title = document.createElement('span');
+          title.className = 'kanban-title';
+          title.textContent = card.title;
+
+
+          item.append(title);
+          list.appendChild(item);
+        });
+      });
+    }
+
+    /** ¿"En proceso" está lleno para esta tarjeta? (no cuenta si ya está ahí) */
+    function doingIsFull(card) {
+      return card.col !== 1 && cards.filter((c) => c.col === 1).length >= KANBAN_WIP_LIMIT;
+    }
+
+    /**
+     * Mueve una tarjeta a la columna "target" (0, 1 o 2). Sirve para flechas y
+     * para arrastrar y soltar. Devuelve true si se movió.
+     */
+    function moveTo(id, target) {
+      const card = cards.find((c) => c.id === id);
+      if (!card || target === card.col) return false;
+
+      // Regla WIP: no entra una tarjeta más si "En proceso" ya tiene el máximo
+      if (target === 1 && doingIsFull(card)) {
+        const column = $('[data-col="doing"]', board);
+        column.classList.add('is-blocked');
+        setTimeout(() => column.classList.remove('is-blocked'), 1400);
+        status.textContent = 'Límite WIP alcanzado: termina una tarjeta de En proceso antes de empezar otra.';
+        return false;
+      }
+
+      card.col = target;
+      status.textContent = '«' + card.title + '» pasó a ' + KANBAN_COLUMNS[target].name + '.';
+      render();
+      return true;
+    }
+
+    /* ---- Flechas (teclado y celular) ---- */
+    board.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-dir]');
+      if (!button) return;
+
+      const id = Number(button.closest('.kanban-card').dataset.cardId);
+      const dir = Number(button.dataset.dir);
+      const card = cards.find((c) => c.id === id);
+
+      if (moveTo(id, card.col + dir)) {
+        // Devuelve el foco a la tarjeta movida para no perder el lugar con teclado
+        const next = $('[data-card-id="' + id + '"] [data-dir="' + dir + '"]', board) || $('[data-card-id="' + id + '"] button', board);
+        if (next) next.focus();
+      }
+    });
+
+    /* ---- Arrastrar y soltar (mouse y táctil, con Pointer Events) ----
+       1. pointerdown sobre una tarjeta: se guarda el punto de partida.
+       2. pointermove: al superar el umbral, se crea una copia "fantasma" que
+          sigue al puntero y se resalta la columna que está debajo.
+       3. pointerup: si hay una columna debajo, se mueve ahí la tarjeta.
+       Escape o pointercancel cancelan el arrastre. */
+    const DRAG_THRESHOLD = 6; // píxeles antes de considerar que es un arrastre
+    let drag = null;
+
+    function columnAt(x, y) {
+      const element = document.elementFromPoint(x, y); // el fantasma ignora el puntero (CSS)
+      return element ? element.closest('[data-col]') : null;
+    }
+
+    /** Resalta la columna bajo el puntero (rosa) o la marca como llena (rojo). */
+    function highlight(column) {
+      const card = drag && cards.find((c) => c.id === drag.id);
+      $$('.kanban-col', board).forEach((col) => {
+        const isTarget = col === column;
+        const denied = isTarget && col.dataset.col === 'doing' && card && doingIsFull(card);
+        col.classList.toggle('is-over', isTarget && !denied);
+        col.classList.toggle('is-denied', denied);
+      });
+    }
+
+    function onMove(event) {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+
+      if (!drag.active) {
+        if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) < DRAG_THRESHOLD) return;
+        drag.active = true;
+        drag.ghost = drag.item.cloneNode(true);
+        drag.ghost.classList.add('kanban-ghost');
+        drag.ghost.style.width = drag.width + 'px';
+        document.body.appendChild(drag.ghost);
+        drag.item.classList.add('is-dragging');
+        document.body.classList.add('is-kanban-dragging');
+      }
+
+      drag.ghost.style.left = (event.clientX - drag.offsetX) + 'px';
+      drag.ghost.style.top = (event.clientY - drag.offsetY) + 'px';
+      highlight(columnAt(event.clientX, event.clientY));
+    }
+
+    function endDrag() {
+      if (!drag) return;
+      if (drag.ghost) drag.ghost.remove();
+      drag.item.classList.remove('is-dragging');
+      document.body.classList.remove('is-kanban-dragging');
+      highlight(null);
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      document.removeEventListener('pointercancel', endDrag);
+      document.removeEventListener('keydown', onKey);
+      drag = null;
+    }
+
+    function onUp(event) {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      const id = drag.id;
+      const column = drag.active ? columnAt(event.clientX, event.clientY) : null;
+      endDrag(); // primero se limpia: moveTo() vuelve a dibujar el tablero
+      if (column) moveTo(id, KANBAN_COLUMNS.findIndex((c) => c.id === column.dataset.col));
+    }
+
+    function onKey(event) {
+      if (event.key === 'Escape') endDrag();
+    }
+
+    board.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      if (event.target.closest('button')) return; // las flechas se manejan aparte
+      const item = event.target.closest('.kanban-card');
+      if (!item) return;
+
+      const rect = item.getBoundingClientRect();
+      drag = {
+        id: Number(item.dataset.cardId),
+        item,
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        offsetX: event.clientX - rect.left,
+        offsetY: event.clientY - rect.top,
+        width: rect.width,
+        active: false,
+        ghost: null
+      };
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+      document.addEventListener('pointercancel', endDrag);
+      document.addEventListener('keydown', onKey);
+    });
+
+    /* ---- Reinicio y estado inicial ---- */
+    function loadInitial() {
+      cards = KANBAN_INITIAL.map((card, index) => ({ id: index, title: card.title, col: card.col }));
+      render();
+    }
+
+    resetButton.addEventListener('click', () => {
+      loadInitial();
+      status.textContent = 'Tablero reiniciado.';
+    });
+
+    loadInitial();
+  }
+
+  /* ==========================================================================
      ARRANQUE
      ========================================================================== */
 
@@ -539,6 +793,8 @@
     initTabs();
     initAccordions();
     initQualityFilters();
+    initExpandAll();
+    initKanban();
     initFlipCards();
     initToolFilter();
     initTimeline();
