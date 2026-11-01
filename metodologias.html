@@ -224,7 +224,7 @@
       <div class="container">
         <div class="method-card">
           <h2 id="kanban-title">US-11 Kanban board</h2>
-          <p class="method-lead">Tablero de práctica: arrastrá las tarjetas entre columnas (o usá las flechas). La columna En proceso admite como máximo 2 tarjetas.</p>
+          <p class="method-lead">Tablero de práctica: arrastrá las tarjetas entre columnas. La columna En proceso admite como máximo 2 tarjetas.</p>
 
           <div class="kanban" data-kanban>
             <div class="kanban-col" data-col="todo">
@@ -288,6 +288,109 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- US-18 y US-19: HERRAMIENTAS INTERACTIVAS METODOLÓGICAS (las controlan initComparator() e initSurvey() en java.js) -->
+    <section class="section" aria-labelledby="tools-title">
+      <div class="container">
+        <div class="tools-head">
+          <div>
+            <h2 id="tools-title" class="section-title">4. Herramientas interactivas metodológicas</h2>
+            <p class="method-lead">Sistemas de soporte para la selección y comparativa de modelos de desarrollo de software.</p>
+          </div>
+        </div>
+
+        <div class="method-tools">
+
+          <!-- US-18: COMPARADOR INTERACTIVO -->
+          <article class="method-card interactive-card" aria-labelledby="us18-title">
+            <span class="us-badge us-badge-cyan">US-18</span>
+            <h3 id="us18-title"><svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M6 15.5V9a3 3 0 0 1 3-3h4M18 8.5V15a3 3 0 0 1-3 3h-4"/></svg>Comparador interactivo de metodologías</h3>
+
+            <form class="compare-box" id="compare-form" novalidate>
+              <fieldset aria-describedby="compare-error">
+                <legend class="tool-legend">1. Seleccionar metodologías (mínimo 2)</legend>
+                <div class="check-grid">
+                  <label class="check-item"><input type="checkbox" name="method" value="cascada" checked><span>Cascada</span></label>
+                  <label class="check-item"><input type="checkbox" name="method" value="modelo-v" checked><span>Modelo en V</span></label>
+                  <label class="check-item"><input type="checkbox" name="method" value="incremental"><span>Incremental</span></label>
+                  <label class="check-item"><input type="checkbox" name="method" value="scrum"><span>Scrum</span></label>
+                  <label class="check-item"><input type="checkbox" name="method" value="kanban"><span>Kanban</span></label>
+                  <label class="check-item"><input type="checkbox" name="method" value="xp"><span>XP</span></label>
+                </div>
+              </fieldset>
+              <div class="compare-actions">
+                <p class="field-error" id="compare-error" role="alert" hidden>Seleccioná al menos 2 metodologías para comparar.</p>
+                <button class="btn btn-secondary" type="submit">Comparar</button>
+              </div>
+            </form>
+
+            <h4 class="tool-legend tool-subtitle">2. Tabla comparativa (adaptativa)</h4>
+            <p class="table-hint">Tocá una característica o el nombre de una metodología para resaltar su fila o columna.</p>
+            <div class="table-wrap">
+              <table class="compare-table" id="compare-table">
+                <caption class="visually-hidden">Comparación de las metodologías seleccionadas</caption>
+              </table>
+            </div>
+            <p class="visually-hidden" id="compare-status" role="status"></p>
+          </article>
+
+          <!-- US-19: ENCUESTA DE PREFERENCIAS METODOLÓGICAS -->
+          <article class="method-card interactive-card" aria-labelledby="us19-title">
+            <div class="tool-head">
+              <span class="us-badge us-badge-rose">US-19</span>
+              <span class="step-pill" id="survey-pill">Paso 1/5</span>
+            </div>
+            <h3 id="us19-title"><svg class="tool-icon is-rose" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM10 12a2 2 0 1 1 3 1.7c-.6.4-1 .8-1 1.5M12 18h.01"/></svg>Encuesta de preferencias metodológicas</h3>
+
+            <div class="progress-label"><span id="survey-step-title">Paso 1: Complejidad del Proyecto</span><span class="mono" id="survey-percent">20%</span></div>
+            <div class="progress" id="survey-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" aria-labelledby="survey-step-title"><span class="progress-fill" id="survey-fill"></span></div>
+
+            <div class="survey-panel">
+              <fieldset id="survey-question-wrap">
+                <legend id="survey-question"></legend>
+                <div class="option-list" id="survey-options"></div>
+              </fieldset>
+
+              <div class="survey-final" id="survey-final" hidden>
+                <p class="survey-final-lead">¡Encuesta completada! Revise la recomendación del algoritmo.</p>
+                <svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5 7 21l5-3 5 3-1.5-7.5"/></svg>
+                <h4 id="survey-final-title" tabindex="-1">Análisis metodológico concluido</h4>
+                <p>Basado en sus respuestas, el algoritmo calculó la mejor coincidencia para la gestión de su software.</p>
+              </div>
+
+              <p class="field-hint" id="survey-hint" role="status">Elegí una opción para continuar.</p>
+
+              <div class="survey-nav">
+                <button class="btn-nav" id="survey-prev" type="button">← Anterior</button>
+                <button class="btn btn-secondary" id="survey-next" type="button">Siguiente →</button>
+                <button class="btn btn-secondary" id="survey-restart" type="button" hidden>Reiniciar ↻</button>
+              </div>
+            </div>
+
+            <!-- Resumen final dinámico: durante la encuesta solo muestra "cargando"; el resultado aparece recién en el paso 5 -->
+            <div class="summary" id="survey-summary">
+              <div class="summary-head">
+                <span class="summary-title">Resumen final dinámico</span>
+                <span class="mono summary-meta" id="survey-meta">Paso 1 de 5 registrado</span>
+              </div>
+              <div id="survey-loading">
+                <p>Responda todas las preguntas para ver la distribución porcentual recomendada.</p>
+                <p class="summary-progress"><span class="spinner" aria-hidden="true"></span><span id="survey-progress-text">Progreso actual: 0 de 4 preguntas evaluadas.</span></p>
+              </div>
+              <div id="survey-result" hidden>
+                <div class="suggestion">
+                  <div><small>Sugerencia recomendada</small><strong id="survey-winner"></strong></div>
+                  <svg class="check-badge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" stroke="none"/><path d="m7.5 12.5 3 3 6-6.5" stroke="var(--twilight-indigo)"/></svg>
+                </div>
+                <div class="percent-grid" id="survey-percents"></div>
+                <p class="tie-note" id="survey-tie" hidden></p>
+              </div>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>

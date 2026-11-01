@@ -1,5 +1,4 @@
-/**
- * java.js — Lógica de interacción · Portal SGCS · Crowd Loop · Sprint 1
+/** java.js — Lógica de interacción · Portal SGCS · Crowd Loop · Sprint 1
  * ---------------------------------------------------------------------------
  * Un único archivo con un módulo por Historia de Usuario. Cada módulo se
  * inicializa solo si encuentra sus elementos en la página, así que el mismo
@@ -11,14 +10,11 @@
  *   US-03        Tarjetas interactivas (flip-cards)   → initFlipCards()
  *   US-04        Filtro en tiempo real por categoría  → initToolFilter()
  *   US-05        Línea de tiempo con iluminación      → initTimeline()
- *   US-06        Navegación interna por subsecciones  → initQuickNav()
- */
+ *   US-06        Navegación interna por subsecciones  → initQuickNav()*/
 (function () {
   'use strict';
 
-  /* ==========================================================================
-     UTILIDADES
-     ========================================================================== */
+  /* UTILIDADES*/
 
   /** Atajos para seleccionar elementos. */
   const $ = (selector, context = document) => context.querySelector(selector);
@@ -26,18 +22,15 @@
 
   /**
    * Normaliza un texto para comparar: minúsculas y sin tildes.
-   * Permite que "calidad" coincida con "Calidád" o "CALIDAD".
-   */
+   * Permite que "calidad" coincida con "Calidád" o "CALIDAD".*/
   function normalize(text) {
     return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
   }
 
-  /* ==========================================================================
-     AVISO ("TOAST") Y ENLACES "PRÓXIMAMENTE"
+  /*AVISO ("TOAST") Y ENLACES "PRÓXIMAMENTE"
      Los enlaces con el atributo data-coming-soon apuntan a páginas que aún no
      existen (Metodologías, Glosario, Aviso Legal…). Muestran un aviso en lugar
-     de una página 404. Cuando la página exista, se quita el atributo.
-     ========================================================================== */
+     de una página 404. Cuando la página exista, se quita el atributo. */
 
   let toastTimer;
 
@@ -58,13 +51,11 @@
     });
   }
 
-  /* ==========================================================================
-     US-01 · MENÚ HAMBURGUESA DINÁMICO
+  /*  US-01 · MENÚ HAMBURGUESA DINÁMICO
      - Botón .nav-toggle abre/cierra el panel #site-nav (visible hasta 1024px).
      - Mantiene sincronizados aria-expanded y aria-label (accesibilidad).
      - Se cierra con: clic en un enlace, tecla Escape, clic fuera del menú
-       o al agrandar la ventana hasta el modo escritorio.
-     ========================================================================== */
+       o al agrandar la ventana hasta el modo escritorio. */
 
   function initNavigation() {
     const toggle = $('.nav-toggle');
@@ -108,11 +99,9 @@
     });
   }
 
-  /* ==========================================================================
-     BUSCADOR DEL ENCABEZADO
-     Búsqueda simple sobre un índice estático de páginas y secciones.
-     Al escribir muestra hasta 6 resultados; Enter abre el primero.
-     ========================================================================== */
+  /* 
+     BUSCADOR DEL ENCABEZADO: Búsqueda simple sobre un índice estático de páginas y secciones.
+     Al escribir muestra hasta 6 resultados; Enter abre el primero.*/
 
   const SEARCH_INDEX = [
     { title: 'Inicio', url: 'index.html', keywords: 'portal principal tarjetas sobre nosotros equipo' },
@@ -125,6 +114,8 @@
     { title: 'Ciclo de vida del software (SDLC)', url: 'sdlc.html', keywords: 'sdlc planificacion requisitos diseno implementacion pruebas despliegue mantenimiento linea de tiempo' },
     { title: 'Scrum framework', url: 'metodologias.html#scrum-title', keywords: 'scrum roles eventos events artefactos product owner scrum master developers sprint daily retrospectiva backlog increment' },
     { title: 'Kanban board', url: 'metodologias.html#kanban-title', keywords: 'kanban tablero wip flujo columnas tarjetas limite' },
+    { title: 'Comparador de metodologías', url: 'metodologias.html#tools-title', keywords: 'comparador comparar cascada modelo en v incremental scrum kanban xp tabla' },
+    { title: 'Encuesta de preferencias metodológicas', url: 'metodologias.html#us19-title', keywords: 'encuesta cuestionario recomendacion metodologia proyecto porcentaje' },
     { title: 'Modelos tradicionales de desarrollo', url: 'sdlc.html#models-title', keywords: 'cascada modelo en v iterativo ventajas desventajas esquema' }
   ];
 
@@ -189,13 +180,11 @@
     });
   }
 
-  /* ==========================================================================
-     US-02 · PESTAÑAS (TABS)
+  /* US-02 · PESTAÑAS (TABS)
      Patrón ARIA "tabs": role=tablist / tab / tabpanel.
      - Clic o teclado (← → Inicio Fin) para cambiar de pestaña.
      - Solo la pestaña activa está en el orden de tabulación (roving tabindex).
-     - Admite enlaces directos: fundamentos.html#tab-iso25000
-     ========================================================================== */
+     - Admite enlaces directos: fundamentos.html#tab-iso25000*/
 
   function initTabs() {
     const groups = $$('[data-tabs]');
@@ -242,11 +231,9 @@
     });
   }
 
-  /* ==========================================================================
-     US-02 · ACORDEÓN
+  /*US-02 · ACORDEÓN
      Cada .acc-trigger controla un panel (aria-controls). Con el atributo
-     data-single en el contenedor, solo un ítem puede estar abierto a la vez.
-     ========================================================================== */
+     data-single en el contenedor, solo un ítem puede estar abierto a la vez.*/
 
   function setAccordionItem(trigger, open) {
     trigger.setAttribute('aria-expanded', String(open));
@@ -271,12 +258,10 @@
     });
   }
 
-  /* ==========================================================================
-     TARJETA RESUMEN DE GESTIÓN DE CALIDAD (US-03 + US-04, filtro en fundamentos.html)
+  /* TARJETA RESUMEN DE GESTIÓN DE CALIDAD (US-03 + US-04, filtro en fundamentos.html)
      Cada botón "Filtrar" de la tarjeta resumen es un interruptor: al activarse
      (o desactivarse) se agrega o se quita su descripción del panel de
-     resultados. Varios pueden estar activos a la vez.
-     ========================================================================== */
+     resultados. Varios pueden estar activos a la vez.*/
 
   const QUALITY_FILTER_DATA = {
     'caja-negra': { title: 'Pruebas de Caja Negra', desc: 'Se comprueban entradas y salidas sin mirar el código. Parten de los requisitos y usan partición de equivalencia y valores límite.' },
@@ -321,13 +306,11 @@
     render();
   }
 
-  /* ==========================================================================
-     US-03 · TARJETAS INTERACTIVAS (FLIP-CARDS)
+  /*US-03 · TARJETAS INTERACTIVAS (FLIP-CARDS)
      - Clic en la tarjeta (o en sus botones, con teclado) la voltea.
      - La cara oculta se marca como "inert" para que no reciba foco ni la lea
        un lector de pantalla.
-     - Botón "Voltear todas" para revisar el contenido completo.
-     ========================================================================== */
+     - Botón "Voltear todas" para revisar el contenido completo.*/
 
   function initFlipCards() {
     const cards = $$('.flip-card');
@@ -366,12 +349,10 @@
     }
   }
 
-  /* ==========================================================================
-     US-04 · FILTRO INTERACTIVO EN TIEMPO REAL
+  /*US-04 · FILTRO INTERACTIVO EN TIEMPO REAL
      Combina dos criterios: categoría (botones) y texto (buscador).
      Cada tarjeta declara su categoría con data-category="slug".
-     Se actualiza el contador (aria-live) y un mensaje si no hay resultados.
-     ========================================================================== */
+     Se actualiza el contador (aria-live) y un mensaje si no hay resultados.*/
 
   function initToolFilter() {
     const grid = $('[data-filter-grid]');
@@ -422,13 +403,11 @@
     applyFilter();
   }
 
-  /* ==========================================================================
-     US-05 · LÍNEA DE TIEMPO SDLC
+  /*US-05 · LÍNEA DE TIEMPO SDLC
      - Cada fase se expande/contrae y se ilumina al activarse.
      - Al desplazar la página, una línea de progreso se "llena" y los
        marcadores por los que pasa se iluminan suavemente.
-     - El scroll se procesa con requestAnimationFrame para no perder fluidez.
-     ========================================================================== */
+     - El scroll se procesa con requestAnimationFrame para no perder fluidez. */
 
   function initTimeline() {
     const timeline = $('[data-timeline]');
@@ -487,12 +466,10 @@
     updateProgress();
   }
 
-  /* ==========================================================================
-     US-06 · NAVEGACIÓN INTERNA RÁPIDA POR SUBSECCIONES
+  /* US-06 · NAVEGACIÓN INTERNA RÁPIDA POR SUBSECCIONES
      - Las anclas (#cascada, #modelo-v…) hacen scroll suave (ver CSS).
      - IntersectionObserver detecta la subsección visible y marca su enlace
-       con aria-current, centrando el botón en la barra en móviles.
-     ========================================================================== */
+       con aria-current, centrando el botón en la barra en móviles. */
 
   function initQuickNav() {
     const nav = $('[data-quicknav]');
@@ -529,11 +506,9 @@
     links.forEach((link) => link.addEventListener('click', () => setCurrent(link.getAttribute('href').slice(1))));
   }
 
-  /* ==========================================================================
-     US-10 · BOTÓN "VER DETALLES" (Scrum)
+  /* US-10 · BOTÓN "VER DETALLES" (Scrum)
      Abre (o cierra) todos los acordeones del panel de pestaña visible.
-     Al cambiar de pestaña el botón vuelve a su texto inicial.
-     ========================================================================== */
+     Al cambiar de pestaña el botón vuelve a su texto inicial.*/
 
   function initExpandAll() {
     $$('[data-expand-all]').forEach((button) => {
@@ -554,13 +529,11 @@
     });
   }
 
-  /* ==========================================================================
-     US-11 · TABLERO KANBAN SIMULADO
-     - Las tarjetas se arrastran entre columnas (o se mueven con las flechas).
+  /* US-11 · TABLERO KANBAN SIMULADO
+     - Las tarjetas se arrastran entre columnas.
      - "En proceso" respeta un límite WIP: si ya tiene 2 tarjetas, no deja
        entrar otra y avisa (así se practica la regla de limitar el trabajo).
-     - El estado vive en el arreglo "cards"; render() vuelve a dibujar todo.
-     ========================================================================== */
+     - El estado vive en el arreglo "cards"; render() vuelve a dibujar todo. */
 
   const KANBAN_COLUMNS = [
     { id: 'todo', name: 'Por hacer' },
@@ -584,18 +557,6 @@
     const status = $('#kanban-status');
     const resetButton = $('#kanban-reset');
     let cards = [];
-
-    /** Crea un botón de flecha (dir = -1 atrás, +1 adelante). Sirve para teclado y celular. */
-    function makeButton(card, dir) {
-      const target = KANBAN_COLUMNS[card.col + dir].name;
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'kanban-btn';
-      button.dataset.dir = String(dir);
-      button.textContent = dir < 0 ? '←' : '→';
-      button.setAttribute('aria-label', 'Mover «' + card.title + '» a ' + target);
-      return button;
-    }
 
     /** Dibuja las tres columnas según el estado actual. */
     function render() {
@@ -623,7 +584,6 @@
           title.className = 'kanban-title';
           title.textContent = card.title;
 
-
           item.append(title);
           list.appendChild(item);
         });
@@ -636,8 +596,8 @@
     }
 
     /**
-     * Mueve una tarjeta a la columna "target" (0, 1 o 2). Sirve para flechas y
-     * para arrastrar y soltar. Devuelve true si se movió.
+     * Mueve una tarjeta a la columna "target" (0, 1 o 2) al soltarla.
+     * Devuelve true si se movió.
      */
     function moveTo(id, target) {
       const card = cards.find((c) => c.id === id);
@@ -657,22 +617,6 @@
       render();
       return true;
     }
-
-    /* ---- Flechas (teclado y celular) ---- */
-    board.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-dir]');
-      if (!button) return;
-
-      const id = Number(button.closest('.kanban-card').dataset.cardId);
-      const dir = Number(button.dataset.dir);
-      const card = cards.find((c) => c.id === id);
-
-      if (moveTo(id, card.col + dir)) {
-        // Devuelve el foco a la tarjeta movida para no perder el lugar con teclado
-        const next = $('[data-card-id="' + id + '"] [data-dir="' + dir + '"]', board) || $('[data-card-id="' + id + '"] button', board);
-        if (next) next.focus();
-      }
-    });
 
     /* ---- Arrastrar y soltar (mouse y táctil, con Pointer Events) ----
        1. pointerdown sobre una tarjeta: se guarda el punto de partida.
@@ -745,7 +689,6 @@
 
     board.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'mouse' && event.button !== 0) return;
-      if (event.target.closest('button')) return; // las flechas se manejan aparte
       const item = event.target.closest('.kanban-card');
       if (!item) return;
 
@@ -781,10 +724,401 @@
 
     loadInitial();
   }
+  /*US-18 · COMPARADOR INTERACTIVO DE METODOLOGÍAS
+     - Se eligen metodologías con casillas (mínimo 2). La validación es en
+       tiempo real: con menos de 2 se muestra el error y "Comparar" se bloquea.
+     - Al comparar se arma la tabla con una columna por metodología elegida.
+     - Resaltado: tocar el nombre de una característica o de una metodología
+       marca su fila o columna (se puede combinar y se quita tocando de nuevo). */
+  const COMPARE_ROWS = [
+    'Enfoque principal',
+    'Flexibilidad al cambio',
+    'Estructura de roles',
+    'Frecuencia de entregas',
+    'Nivel de documentación',
+    'Gestión de riesgo'
+  ];
 
-  /* ==========================================================================
-     ARRANQUE
-     ========================================================================== */
+  // Mismo orden que COMPARE_ROWS
+  const COMPARE_METHODS = {
+    'cascada': { name: 'Cascada', values: ['Secuencial rígido', 'Baja / Inflexible', 'Especializados por fase', 'Única entrega al final', 'Extensa y exhaustiva', 'Alto al final del proyecto'] },
+    'modelo-v': { name: 'Modelo en V', values: ['Secuencial orientado a QA', 'Baja / Riguroso', 'Devs y Testers pares', 'Entrega única formal', 'Muy estricta y trazable', 'Medio-Bajo en verificación'] },
+    'incremental': { name: 'Incremental', values: ['Entregas parciales por módulos', 'Media', 'Equipos por incremento', 'Varias entregas incrementales', 'Media', 'Medio: se detecta en cada incremento'] },
+    'scrum': { name: 'Scrum', values: ['Iterativo en Sprints', 'Alta', 'Product Owner, Scrum Master y Developers', 'Cada Sprint (1 a 4 semanas)', 'Ligera y justa', 'Bajo: se revisa en cada Sprint'] },
+    'kanban': { name: 'Kanban', values: ['Flujo continuo', 'Muy alta', 'Sin roles obligatorios', 'Continua, tarea por tarea', 'Mínima', 'Bajo: el límite WIP muestra los cuellos de botella'] },
+    'xp': { name: 'XP', values: ['Iterativo centrado en prácticas técnicas', 'Muy alta', 'Programadores, cliente en el equipo y coach', 'Muy frecuentes (iteraciones de 1 a 2 semanas)', 'Mínima: el código y las pruebas documentan', 'Bajo: pruebas e integración continuas'] }
+  };
+
+  function initComparator() {
+    const form = $('#compare-form');
+    const table = $('#compare-table');
+    if (!form || !table) return;
+
+    const boxes = $$('input[name="method"]', form);
+    const error = $('#compare-error');
+    const submit = $('button[type="submit"]', form);
+    const status = $('#compare-status');
+    let highlightedRow = null;
+    let highlightedCol = null;
+
+    /** Claves de las metodologías marcadas, en el orden de las casillas. */
+    function selectedKeys() {
+      return boxes.filter((box) => box.checked).map((box) => box.value);
+    }
+
+    /** Validación en tiempo real: mínimo 2 metodologías. */
+    function validate() {
+      const valid = selectedKeys().length >= 2;
+      error.hidden = valid;
+      submit.disabled = !valid;
+      boxes.forEach((box) => box.closest('.check-item').classList.toggle('is-checked', box.checked));
+    }
+
+    /** Aplica el resaltado a la fila y/o columna elegidas. */
+    function applyHighlight() {
+      $$('[data-row], [data-col]', table).forEach((cell) => {
+        const hit = (highlightedRow !== null && cell.dataset.row === String(highlightedRow)) ||
+                    (highlightedCol !== null && cell.dataset.col === highlightedCol);
+        cell.classList.toggle('is-hl', hit);
+      });
+      $$('[data-hl-row]', table).forEach((button) => button.setAttribute('aria-pressed', String(String(highlightedRow) === button.dataset.hlRow)));
+      $$('[data-hl-col]', table).forEach((button) => button.setAttribute('aria-pressed', String(highlightedCol === button.dataset.hlCol)));
+    }
+
+    /** Arma la tabla para las metodologías indicadas. */
+    function render(keys) {
+      highlightedRow = null;
+      highlightedCol = null;
+      table.style.minWidth = (130 + 105 * keys.length) + 'px';
+
+      const thead = document.createElement('thead');
+      const headRow = document.createElement('tr');
+      const corner = document.createElement('th');
+      corner.scope = 'col';
+      corner.textContent = 'Característica';
+      headRow.appendChild(corner);
+
+      keys.forEach((key) => {
+        const th = document.createElement('th');
+        th.scope = 'col';
+        th.dataset.col = key;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'hl-btn';
+        button.dataset.hlCol = key;
+        button.setAttribute('aria-pressed', 'false');
+        button.textContent = COMPARE_METHODS[key].name;
+        th.appendChild(button);
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+
+      const tbody = document.createElement('tbody');
+      COMPARE_ROWS.forEach((label, rowIndex) => {
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        th.scope = 'row';
+        th.dataset.row = String(rowIndex);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'hl-btn';
+        button.dataset.hlRow = String(rowIndex);
+        button.setAttribute('aria-pressed', 'false');
+        button.textContent = label;
+        th.appendChild(button);
+        tr.appendChild(th);
+
+        keys.forEach((key) => {
+          const td = document.createElement('td');
+          td.dataset.row = String(rowIndex);
+          td.dataset.col = key;
+          td.textContent = COMPARE_METHODS[key].values[rowIndex];
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+
+      // Se conserva el <caption> y se reemplaza el resto
+      $$('thead, tbody', table).forEach((part) => part.remove());
+      table.append(thead, tbody);
+      status.textContent = 'Comparando: ' + keys.map((key) => COMPARE_METHODS[key].name).join(', ') + '.';
+    }
+
+    boxes.forEach((box) => box.addEventListener('change', validate));
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      validate();
+      if (selectedKeys().length >= 2) render(selectedKeys());
+    });
+
+    // Resaltado de fila / columna (delegación de eventos sobre la tabla)
+    table.addEventListener('click', (event) => {
+      const rowButton = event.target.closest('[data-hl-row]');
+      const colButton = event.target.closest('[data-hl-col]');
+      if (rowButton) highlightedRow = highlightedRow === Number(rowButton.dataset.hlRow) ? null : Number(rowButton.dataset.hlRow);
+      if (colButton) highlightedCol = highlightedCol === colButton.dataset.hlCol ? null : colButton.dataset.hlCol;
+      if (rowButton || colButton) applyHighlight();
+    });
+
+    validate();
+    render(selectedKeys());
+  }
+  /*US-19 · ENCUESTA DE PREFERENCIAS METODOLÓGICAS
+     - 4 preguntas + un paso final (5 pasos). La barra de progreso avanza 20%
+       por paso al tocar "Siguiente".
+     - Validación en tiempo real: "Siguiente" queda bloqueado hasta elegir una
+       opción, y un mensaje lo explica.
+     - Cada opción suma puntos a Cascada, Scrum y Kanban. Al final, los puntos
+       se convierten en porcentajes (suman 100) y se sugiere el más alto.
+     - El resumen solo muestra el resultado en el paso 5; antes, un indicador
+       de carga con el progreso de preguntas evaluadas. */
+  const SURVEY_METHODS = [
+    { id: 'cascada', name: 'Cascada' },
+    { id: 'scrum', name: 'Scrum' },
+    { id: 'kanban', name: 'Kanban' }
+  ];
+
+  const SURVEY_STEPS = [
+    {
+      title: 'Complejidad del Proyecto',
+      question: '¿Cuál es el nivel de complejidad técnica y tamaño del proyecto?',
+      options: [
+        { text: 'Proyecto pequeño con alcance muy simple y definido', score: { cascada: 3, scrum: 1, kanban: 2 } },
+        { text: 'Proyecto de tamaño mediano con interacciones dinámicas', score: { cascada: 1, scrum: 3, kanban: 2 } },
+        { text: 'Proyecto grande, altamente complejo y de arquitectura distribuida', score: { cascada: 2, scrum: 3, kanban: 1 } }
+      ]
+    },
+    {
+      title: 'Requisitos Cambiantes',
+      question: '¿Cómo se caracterizan los requisitos de su proyecto?',
+      options: [
+        { text: 'Fijos, totalmente predefinidos y aprobados previamente', score: { cascada: 3, scrum: 1, kanban: 1 } },
+        { text: 'Variables, cambiantes según retroalimentación del mercado', score: { cascada: 0, scrum: 3, kanban: 2 } },
+        { text: 'Flujo continuo de tareas e incidencias sin iteraciones fijas', score: { cascada: 0, scrum: 1, kanban: 3 } }
+      ]
+    },
+    {
+      title: 'Restricción de Tiempo',
+      question: '¿Cuál es el esquema de tiempo deseado para las entregas?',
+      options: [
+        { text: 'Entrega única al final del ciclo de desarrollo', score: { cascada: 3, scrum: 0, kanban: 1 } },
+        { text: 'Entregas periódicas en iteraciones cortas (1 a 4 semanas)', score: { cascada: 0, scrum: 3, kanban: 1 } },
+        { text: 'Despliegue continuo a medida que cada tarea se complete', score: { cascada: 0, scrum: 1, kanban: 3 } }
+      ]
+    },
+    {
+      title: 'Equipo y Cliente',
+      question: '¿Cuál es el nivel de involucramiento disponible del cliente?',
+      options: [
+        { text: 'Bajo: Solo al inicio para requisitos y al final para aceptación', score: { cascada: 3, scrum: 1, kanban: 1 } },
+        { text: 'Alto: Disponible para revisiones al final de cada iteración', score: { cascada: 1, scrum: 3, kanban: 1 } },
+        { text: 'Continuo: Monitoreo constante del tablero de trabajo', score: { cascada: 0, scrum: 1, kanban: 3 } }
+      ]
+    }
+  ];
+
+  const SURVEY_FINAL_STEP = SURVEY_STEPS.length; // índice del paso 5 (resultado)
+
+  /**
+   * Convierte las respuestas en porcentajes y elige la metodología sugerida.
+   * Los porcentajes se reparten por "mayor resto" para que sumen exactamente 100.
+   * En un empate se prioriza a quien puntúa más en la pregunta de requisitos y,
+   * si sigue empatado, el orden Scrum, Kanban, Cascada.
+   */
+  function computeSurveyResult(answers) {
+    const totals = { cascada: 0, scrum: 0, kanban: 0 };
+    answers.forEach((choice, stepIndex) => {
+      const score = SURVEY_STEPS[stepIndex].options[choice].score;
+      SURVEY_METHODS.forEach((method) => { totals[method.id] += score[method.id]; });
+    });
+
+    const sum = SURVEY_METHODS.reduce((acc, method) => acc + totals[method.id], 0);
+    const percents = {};
+    const remainders = [];
+    let assigned = 0;
+    SURVEY_METHODS.forEach((method) => {
+      const exact = (totals[method.id] / sum) * 100;
+      percents[method.id] = Math.floor(exact);
+      assigned += percents[method.id];
+      remainders.push({ id: method.id, rest: exact - Math.floor(exact) });
+    });
+    remainders.sort((a, b) => b.rest - a.rest);
+    for (let i = 0; i < 100 - assigned; i += 1) percents[remainders[i].id] += 1;
+
+    const top = Math.max(...SURVEY_METHODS.map((method) => totals[method.id]));
+    let leaders = SURVEY_METHODS.map((method) => method.id).filter((id) => totals[id] === top);
+    const tied = leaders.length > 1 ? leaders.slice() : [];
+
+    if (leaders.length > 1) {
+      const requirements = SURVEY_STEPS[1].options[answers[1]].score;
+      const best = Math.max(...leaders.map((id) => requirements[id]));
+      leaders = leaders.filter((id) => requirements[id] === best);
+    }
+    if (leaders.length > 1) {
+      leaders = ['scrum', 'kanban', 'cascada'].filter((id) => leaders.includes(id));
+    }
+
+    return { percents, winner: leaders[0], tied };
+  }
+
+  function initSurvey() {
+    const fieldset = $('#survey-question-wrap');
+    if (!fieldset) return;
+
+    const pill = $('#survey-pill');
+    const stepTitle = $('#survey-step-title');
+    const percentLabel = $('#survey-percent');
+    const bar = $('#survey-bar');
+    const fill = $('#survey-fill');
+    const legend = $('#survey-question');
+    const optionsBox = $('#survey-options');
+    const finalBox = $('#survey-final');
+    const finalTitle = $('#survey-final-title');
+    const hint = $('#survey-hint');
+    const prev = $('#survey-prev');
+    const next = $('#survey-next');
+    const restart = $('#survey-restart');
+    const meta = $('#survey-meta');
+    const loading = $('#survey-loading');
+    const progressText = $('#survey-progress-text');
+    const result = $('#survey-result');
+    const winnerLabel = $('#survey-winner');
+    const percentsBox = $('#survey-percents');
+    const tieNote = $('#survey-tie');
+
+    let step = 0;
+    let answers = SURVEY_STEPS.map(() => null);
+
+    /** Dibuja la pregunta del paso actual, con la respuesta previa si existe. */
+    function renderQuestion() {
+      const data = SURVEY_STEPS[step];
+      legend.textContent = data.question;
+      optionsBox.innerHTML = '';
+
+      data.options.forEach((option, index) => {
+        const label = document.createElement('label');
+        label.className = 'option' + (answers[step] === index ? ' is-selected' : '');
+
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'survey-answer';
+        input.value = String(index);
+        input.checked = answers[step] === index;
+
+        const text = document.createElement('span');
+        text.textContent = option.text;
+
+        label.append(input, text);
+        optionsBox.appendChild(label);
+      });
+    }
+
+    /** Resumen: cargando durante la encuesta, resultado solo en el paso final. */
+    function renderSummary() {
+      const isFinal = step === SURVEY_FINAL_STEP;
+      loading.hidden = isFinal;
+      result.hidden = !isFinal;
+
+      if (!isFinal) {
+        const answered = answers.filter((answer) => answer !== null).length;
+        meta.textContent = 'Paso ' + (step + 1) + ' de 5 registrado';
+        progressText.textContent = 'Progreso actual: ' + answered + ' de ' + SURVEY_STEPS.length + ' preguntas evaluadas.';
+        return;
+      }
+
+      const outcome = computeSurveyResult(answers);
+      const winnerName = SURVEY_METHODS.find((method) => method.id === outcome.winner).name;
+      meta.textContent = 'Evaluación finalizada';
+      winnerLabel.textContent = winnerName + ' (' + outcome.percents[outcome.winner] + '% de coincidencia)';
+
+      percentsBox.innerHTML = '';
+      SURVEY_METHODS.forEach((method) => {
+        const box = document.createElement('div');
+        box.className = 'percent-box' + (method.id === outcome.winner ? ' is-top' : '');
+        const strong = document.createElement('strong');
+        strong.textContent = outcome.percents[method.id] + '%';
+        box.append(method.name, strong);
+        percentsBox.appendChild(box);
+      });
+
+      if (outcome.tied.length) {
+        const names = outcome.tied.map((id) => SURVEY_METHODS.find((method) => method.id === id).name);
+        tieNote.textContent = 'Resultado ajustado: hay empate entre ' + names.join(' y ') + '. Conviene evaluar ambas opciones.';
+        tieNote.hidden = false;
+      } else {
+        tieNote.hidden = true;
+      }
+    }
+
+    /** Actualiza botones, mensaje de validación y barra de progreso. */
+    function renderControls() {
+      const isFinal = step === SURVEY_FINAL_STEP;
+      const percent = (step + 1) * 20;
+
+      pill.textContent = 'Paso ' + (step + 1) + '/5';
+      stepTitle.textContent = 'Paso ' + (step + 1) + ': ' + (isFinal ? 'Sugerencia Final' : SURVEY_STEPS[step].title);
+      percentLabel.textContent = percent + '%';
+      fill.style.width = percent + '%';
+      bar.setAttribute('aria-valuenow', String(percent));
+
+      fieldset.hidden = isFinal;
+      finalBox.hidden = !isFinal;
+      prev.disabled = step === 0;
+      next.hidden = isFinal;
+      restart.hidden = !isFinal;
+
+      const missing = !isFinal && answers[step] === null;
+      next.disabled = missing;
+      hint.hidden = !missing;
+    }
+
+    function render() {
+      if (step !== SURVEY_FINAL_STEP) renderQuestion();
+      renderControls();
+      renderSummary();
+    }
+
+    /** Lleva el foco al contenido nuevo para quien navega con teclado o lector. */
+    function focusContent() {
+      const target = step === SURVEY_FINAL_STEP ? finalTitle : ($('input:checked', optionsBox) || $('input', optionsBox));
+      if (target) target.focus({ preventScroll: true });
+    }
+
+    // Elegir una opción habilita "Siguiente" al instante (validación en tiempo real)
+    optionsBox.addEventListener('change', (event) => {
+      if (event.target.name !== 'survey-answer') return;
+      answers[step] = Number(event.target.value);
+      $$('.option', optionsBox).forEach((label) => label.classList.toggle('is-selected', $('input', label).checked));
+      renderControls();
+      renderSummary();
+    });
+
+    next.addEventListener('click', () => {
+      if (answers[step] === null) return;
+      step += 1;
+      render();
+      focusContent();
+    });
+
+    prev.addEventListener('click', () => {
+      if (step === 0) return;
+      step -= 1;
+      render();
+      focusContent();
+    });
+
+    restart.addEventListener('click', () => {
+      answers = SURVEY_STEPS.map(() => null);
+      step = 0;
+      render();
+      focusContent();
+    });
+
+    render();
+  }
+
+  /* ARRANQUE*/
 
   document.addEventListener('DOMContentLoaded', () => {
     initComingSoonLinks();
@@ -795,6 +1129,8 @@
     initQualityFilters();
     initExpandAll();
     initKanban();
+    initComparator();
+    initSurvey();
     initFlipCards();
     initToolFilter();
     initTimeline();
